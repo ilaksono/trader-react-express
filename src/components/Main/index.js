@@ -2,7 +2,7 @@ import { useState, useContext, useEffect } from 'react';
 import { Button } from '@material-ui/core';
 import ChartSection from './ChartSection';
 import useChartData from 'hooks/useChartData';
-import AppContext from 'AppContext'; 
+import AppContext from 'AppContext';
 
 
 const Main = () => {
@@ -11,7 +11,8 @@ const Main = () => {
     chartOptions,
     setChartOptions,
     chartData,
-    setChartData
+    setChartData,
+    primeChartData
   } = useChartData();
 
   const {
@@ -19,19 +20,21 @@ const Main = () => {
     getDailyAdjusted
   } = useContext(AppContext);
 
-  
+
   const handleSubmit = () => {
-    getDailyAdjusted(ticker)
-  }
-  
+    getDailyAdjusted(ticker);
+  };
+
 
   useEffect(() => {
-  }, [stock])
+    if (Object.keys(stock))
+      primeChartData(stock);
+  }, [stock]);
 
   return (
     <div>
       <h1>
-        I AM MAIN
+        Submit Any Ticker
       </h1>
       <form onSubmit={event => event.preventDefault()}>
         <input
@@ -44,10 +47,10 @@ const Main = () => {
           variant='outlined'
           color='primary'
           onClick={handleSubmit}
-        />
+        >Submit</Button>
       </form>
 
-      <ChartSection/>
+      <ChartSection data={chartData} options={chartOptions}/>
 
 
     </div>

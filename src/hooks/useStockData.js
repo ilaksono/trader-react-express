@@ -11,7 +11,9 @@ const GET_DAILY = 'GET_DAILY';
 const stockReducer =(stock, action) => {
   switch(action.type) {
     case GET_DAILY:{
-      return{};
+      return{
+        ...action.data
+      };
     }
     default: 
       throw new Error('not valid stock type')
@@ -24,6 +26,8 @@ const useStockData = () => {
     const data = await axios
     .get(`/api/daily/${tick}`)
     console.log(data.data.data['Time Series (Daily)']);
+    dispatch({ type: GET_DAILY, data: data.data.data['Time Series (Daily)']})
+    
     // dispatch({type: GET_DAILY, data:data.data})
   }
 

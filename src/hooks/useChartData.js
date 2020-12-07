@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import { useState } from 'react';
 const initData = {
   labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
   datasets: [{
@@ -15,15 +15,15 @@ const initOptions = {
     yAxes: [{
       ticks: {
         min: 0,
-        max: 5,
-        maxTicksLimit: 6
+        max: 700,
+        maxTicksLimit: 5
       },
       scaleLabel: {
-        labelString:'Value ($)',
+        labelString: 'Value ($)',
         display: true
       }
     }],
-    xAxes:[{
+    xAxes: [{
       scaleLabel: {
         labelString: 'Date',
         display: true,
@@ -38,11 +38,43 @@ const useChartData = () => {
   const [chartData, setChartData] = useState(initData);
   const [chartOptions, setChartOptions] = useState(initOptions);
 
+  const primeChartData = (obj) => {
+
+    let primedLabels = [];
+    let primedVal = [];
+    let max = 0;
+    primedVal = Object.keys(obj).map((key, i) => {
+      primedLabels.unshift(key);
+      let val = Number(obj[key]['5. adjusted close']);
+      if (max < val)
+        max = val;
+      return val;
+    });
+    primedVal = primedVal.reverse();
+
+    setChartData({
+      labels: primedLabels,
+      datasets: [{
+        label: 'Daily Open',
+        // backgroundColor: 'none',
+        borderColor: 'red',
+        data: primedVal,
+        fill: true,
+        // hoverBackgroundColor: '#1E0253',
+        pointBackgroundColor: 'red'
+        // pointHoverBackgroundColor: '#1E0253'
+      }],
+      ready: true,
+    });
+    setChartOptions(prev => ({ ...prev, scales: { yAxes: [{ ticks: { min: 0, max:1.5 * max, maxTicksLimit: 6 } }] } }));
+  };
+
   return {
     chartOptions,
     setChartOptions,
     chartData,
-    setChartData
+    setChartData,
+    primeChartData
   };
-}
+};
 export default useChartData;
