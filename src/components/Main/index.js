@@ -29,6 +29,7 @@ const Main = () => {
   useEffect(() => {
     if (Object.keys(stock))
       primeChartData(stock);
+      // eslint-disable-next-line
   }, [stock]);
 
   return (

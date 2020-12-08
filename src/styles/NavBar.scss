@@ -1,0 +1,64 @@
+@import './helpers';
+
+.nav-container {
+  @include flexbox(row, space-between, center);
+  height: 85px;
+  padding-bottom: 2px;
+  background-color: $darkp;
+  color: white;
+  opacity: 0.9;
+  padding-left: 55px;
+  padding-right: 55px;
+  box-shadow: 0 0 4px 4px rgb(199, 199, 199)
+}
+
+
+.logo {
+  max-height: 55px;
+  max-width: 55px;
+}
+.nav-logo {
+  cursor: pointer;
+
+}
+.about-me-logo {
+  font-size: 37px;
+  cursor: pointer;
+}
+
+.selected {
+  border-radius: 50%;
+  border: 2px solid salmon;
+  color: salmon;
+  height: 60px;
+  width: 60px;
+  text-align: center;
+}
+.not-selected {
+  border-radius: 50%;
+    border: 2px solid rgb(14, 8, 37);
+
+  color: white;
+  height: 60px;
+  width: 60px;
+  text-align: center;
+}
+.nav-spacer {
+  display: none;
+}
+
+@media screen and (max-width: 650px) {
+  .nav-container {
+    position: fixed;
+    bottom: 0;
+    width: 100vw;
+    z-index: 1;
+    height:75px;
+  }
+  .nav-spacer {
+    display: block;
+    position: absolute;
+    height: 75px;
+    width: 95vw;
+  }
+}
