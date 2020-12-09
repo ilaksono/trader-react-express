@@ -5,7 +5,9 @@ const PORT = process.env.PORT || 8001;
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const fetch = require('node-fetch');
-
+const csvjson = require('csvtojson');
+const fs = require('fs');
+const csv = require('csv-parser');
 const MongoClient = require('mongodb').MongoClient;
 const url = 'mongodb://localhost:27017';
 const index = require('./index.json');
@@ -15,6 +17,8 @@ const DAILY_ADJ = 'TIME_SERIES_DAILY_ADJUSTED';
 const SYMBOL_SEARCH = 'SYMBOL_SEARCH';
 const GLOBAL_QUOTE = 'GLOBAL_QUOTE';
 const OVERVIEW = 'OVERVIEW';
+const INTRA_DAY = 'TIME_SERIES_INTRADAY'
+const INTRA_EX = 'TIME_SERIES_INTRADAY_EXTENDED'
 
 const primeData = () => {
   MongoClient.connect(url, { useUnifiedTopology: true }, async (err, client) => {
@@ -26,7 +30,6 @@ const primeData = () => {
       const A = await setInterval(async () => {
         const data = await fetch(getURL(OVERVIEW, index[i++].symbol));
         const json = await data.json();
-        console.log(i, json);
         stocks.insert(json);
         if (i >= 400 || i >= index.length) {
           clearTimeout(A);
@@ -69,6 +72,16 @@ app.get('/api/daily/:id', async (req, res) => {
   }
 });
 
+app.get('/api/intra/:id', async (req, res) => {
+  try {
+    const url = `https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=${req.params.id}&interval=5min&apikey=${process.env.ALPHA_API_KEY}`
+    const data = await fetch(url);
+    const A = await data.json()
+    res.json({data: A});
+  } catch (er) {
+    console.log(er);
+  }
+});
 
 // app.get('/api/autocomplete/:id', async (req, res) => {
 //   try {
@@ -85,16 +98,24 @@ app.get('/api/daily/:id', async (req, res) => {
 
 app.get('/api/autocomplete/:id', async (req, res) => {
 
-  let re = new RegExp(req.params.id, 'g');
+  let re = new RegExp(req.params.id);
   MongoClient.connect(url, { useUnifiedTopology: true }, async (err, client) => {
-    const db = client.db('trader');
-    const stocks = db.collection('index').initializeOrderedBulkOp();
-    const result = stocks.find({ symbol: "AAPL" });
-
-    await stocks.execute();
-    console.log(result);
-
-    client.close();
+    try {
+      const db = client.db('trader');
+      const stocks = db.collection('index');
+      stocks.find({ symbol: re }).limit(5)
+        .toArray((err, result) => {
+          if (err)
+            console.log(err);
+          res.json({ data: result });
+          client.close();
+        });
+      // const json = await result.filter({ symbol: 'AAPL' });
+      // console.log(result);
+      // res.send(result);
+    } catch (er) {
+      console.log(er);
+    }
   });
 });
 

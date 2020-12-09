@@ -10,7 +10,9 @@ export const AppProvider = ({ children }) => {
     select,
     setSelect,
     header,
-
+    swapIntraDaily,
+    daily,
+    getIntra,
   } = useStockData();
     
   return (
@@ -20,7 +22,9 @@ export const AppProvider = ({ children }) => {
       select,
       setSelect,
       header,
-
+      swapIntraDaily,
+      daily,
+      getIntra,
     }}>
       {children}
     </AppContext.Provider>

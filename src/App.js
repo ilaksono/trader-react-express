@@ -14,6 +14,9 @@ function App() {
           <Route path='/main'>
             <Main />
           </Route>
+          <Route path='/intra'>
+            <Main />
+          </Route>
         </Switch>
       </Router>
     </div>

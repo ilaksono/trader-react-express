@@ -48,13 +48,21 @@ const options = [
   { key: '8. split coefficient', name: 'Split Coeff' }
 ];
 
+const optionsIntra = [
+  { key: '1. open', name: 'Open' },
+  { key: '2. high', name: 'High' },
+  { key: '3. low', name: 'Low' },
+  { key: '4. close', name: 'Close' },
+  { key: '5. volume', name: 'Volume' },
+]
+
 const ChartSwitch = (props) => {
 
   const classes = useStyles();
 
   const arr = ['priceLeft', 'price', 'price', 'priceRight', 'priceLeft', 'price', 'price', 'priceRight'];
 
-  const buttons = options
+  const buttons = props.daily ? options
     .map((select, index) => {
       return (
         <div className="chart-filter-button" key={index} >
@@ -71,7 +79,26 @@ const ChartSwitch = (props) => {
           </Button>
         </div>
       );
-    });
+    }) :
+    optionsIntra
+      .map((select, index) => {
+        return (
+          <div className="chart-filter-button" key={index} >
+            <Button
+              color={select.key === props.select
+                ? 'primary' : 'default'}
+              variant='contained'
+              className={classes[arr[index]]}
+              key={index}
+              name={select.name}
+              onClick={() =>
+                props.clickChartTab(select.key)}>
+              {select.name}
+            </Button>
+          </div>
+        );
+      })
+    ;
 
   return (
     <div className='chart-filter-container' style={{ display: 'flex', flexDirection: 'row' }}>

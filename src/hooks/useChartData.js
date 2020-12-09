@@ -38,7 +38,7 @@ const useChartData = () => {
   const [chartData, setChartData] = useState(initData);
   const [chartOptions, setChartOptions] = useState(initOptions);
 
-  const primeChartData = (obj, k = '5. adjusted close') => {
+  const primeChartData = (obj, k = '1. open') => {
 
     let primedLabels = [];
     let primedVal = [];
@@ -58,7 +58,7 @@ const useChartData = () => {
     setChartData({
       labels: primedLabels,
       datasets: [{
-        label: 'Daily Open',
+        label: k,
         // backgroundColor: 'none',
         borderColor: 'red',
         data: primedVal,
@@ -69,7 +69,7 @@ const useChartData = () => {
       }],
       ready: true,
     });
-    setChartOptions(prev => ({ ...prev, scales: { yAxes: [{ ticks: { min: min * 0.5, max:1.5 * max } }] } }));
+    setChartOptions(prev => ({ ...prev, scales: { yAxes: [{ ticks: { min: min * 0.9, max:1.1 * max } }] } }));
   };
 
   return {

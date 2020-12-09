@@ -15,6 +15,11 @@ const NavBar = () => {
           Daily
       </div>
       </Link>
+      <Link to='/intra'>
+        <div className='nav-logo'>
+          Intraday
+      </div>
+      </Link>
       <Link to='/currency'>
         <div className='nav-logo'>
           Currency
