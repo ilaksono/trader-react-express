@@ -3,7 +3,7 @@ import { Button } from '@material-ui/core';
 import ChartSection from './ChartSection';
 import useChartData from 'hooks/useChartData';
 import AppContext from 'AppContext';
-
+import ChartSwitch from './ChartSwitch';
 
 const Main = () => {
   const [ticker, setTicker] = useState('');
@@ -12,6 +12,8 @@ const Main = () => {
     setChartOptions,
     chartData,
     setChartData,
+    select,
+    setSelect,
     primeChartData
   } = useChartData();
 
@@ -28,10 +30,12 @@ const Main = () => {
 
   useEffect(() => {
     if (Object.keys(stock))
-      primeChartData(stock);
+      primeChartData(stock, select);
       // eslint-disable-next-line
-  }, [stock]);
-
+  }, [stock, select]);
+  const clickChartTab = (val) => {
+    setSelect(val);
+  }
   return (
     <div>
       <h1>
@@ -50,6 +54,7 @@ const Main = () => {
           onClick={handleSubmit}
         >Submit</Button>
       </form>
+      <ChartSwitch select={select} clickChartTab={clickChartTab}/>
 
       <ChartSection data={chartData} options={chartOptions}/>
 

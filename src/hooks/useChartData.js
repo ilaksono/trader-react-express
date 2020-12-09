@@ -38,14 +38,14 @@ const useChartData = () => {
   const [chartData, setChartData] = useState(initData);
   const [chartOptions, setChartOptions] = useState(initOptions);
 
-  const primeChartData = (obj) => {
+  const primeChartData = (obj, k) => {
 
     let primedLabels = [];
     let primedVal = [];
     let max = 0;
     let min;
     primedVal = Object.keys(obj).map((key, i) => {
-      let val = Number(obj[key]['5. adjusted close']);
+      let val = Number(obj[key][k]);
       if(i === 0 || min > val)
         min = val;
       primedLabels.unshift(key);
