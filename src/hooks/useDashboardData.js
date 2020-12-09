@@ -8,12 +8,15 @@ const dashReducer = (dashState, action) => {
     case GET_DASH:
       return { page: dashState.page, data: [...action.data] };
     case SET_PAGE:
-      return {...dashState, page: action.num}
+      return { ...dashState, page: action.num };
     default:
       throw new Error('invalid dash type');
   }
 };
-const initDash = { data: [], page: 1 };
+const initDash = {
+  data: [],
+  page: 1
+};
 
 const useDashboardData = () => {
   const [dash, dispatch] = useReducer(dashReducer, initDash);
@@ -32,14 +35,10 @@ const useDashboardData = () => {
   const getGlobal = (id) => {
     return axios.get(`/api/global/${id}`);
   };
-  const setPage = (num) => {
+  const setPage = (event, num) => {
+    console.log(num);
     dispatch({ type: SET_PAGE, num });
   };
-
-  useEffect(() => {
-    
-  }, [dash.page])
-
   return {
     dash,
     setDashboard,

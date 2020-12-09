@@ -1,15 +1,31 @@
 import DashboardListItem from './DashboardListItem';
 import useDashboardData from 'hooks/useDashboardData';
 import Pagination from '@material-ui/lab/Pagination';
+import { useEffect, useContext } from 'react';
+import AppContext from 'AppContext';
 const index = require('index.json');
 
 const Dashboard = () => {
-  const {dash, setDashboard, setPage} = useDashboardData();
+
+  const {select, getDailyAdjusted} = useContext(AppContext);
+  const { dash, setDashboard, setPage } = useDashboardData();
 
   let parsedList = [];
-  for (let i = 0; i < 12; i++) {
-    parsedList.push(<DashboardListItem {...index[i]} />);
+
+  // if (dash.data.length) {
+  //   parsedList = dash.data.map((each) =>
+  //     <DashboardListItem {...each} />
+  //     );
+  // }
+
+  for (let i = 12 * (dash.page-1); i < 12 * dash.page; i++) {
+    parsedList.push(<DashboardListItem getDailyAdjusted={getDailyAdjusted} {...index[i]} />);
   }
+  // useEffect(() => {
+  //   const arr = index.slice(12 * dash.page, 12 * dash.page + 12);
+  //   setDashboard(arr);
+  // }, [dash.page]);
+
   return (
     <div className='dashboard-layout'>
       <div className='dash-container'>
@@ -29,7 +45,7 @@ const Dashboard = () => {
         </table>
       </div>
       <div>
-        <Pagination count={Math.ceil(index.length / 10)} variant='outlined' color='primary' page={dash.page} onChange={setPage}/>
+        <Pagination  count={Math.ceil(index.length / 12)} variant='outlined' color='primary' page={dash.page} onChange={setPage} />
       </div>
     </div>
   );

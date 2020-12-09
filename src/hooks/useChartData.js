@@ -38,7 +38,7 @@ const useChartData = () => {
   const [chartData, setChartData] = useState(initData);
   const [chartOptions, setChartOptions] = useState(initOptions);
 
-  const primeChartData = (obj, k) => {
+  const primeChartData = (obj, k = '5. adjusted close') => {
 
     let primedLabels = [];
     let primedVal = [];

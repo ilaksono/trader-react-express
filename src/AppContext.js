@@ -6,13 +6,21 @@ const AppContext = React.createContext();
 export const AppProvider = ({ children }) => {
   const {
     stock,
-    getDailyAdjusted
+    getDailyAdjusted,
+    select,
+    setSelect,
+    header,
+
   } = useStockData();
     
   return (
     <AppContext.Provider value={{
       stock,
-      getDailyAdjusted
+      getDailyAdjusted,
+      select,
+      setSelect,
+      header,
+
     }}>
       {children}
     </AppContext.Provider>

@@ -67,14 +67,14 @@ const ChartSwitch = (props) => {
             name={select.name}
             onClick={() =>
               props.clickChartTab(select.key)}>
-            {select}
+            {select.name}
           </Button>
         </div>
       );
     });
 
   return (
-    <div className='chart-filter-container'>
+    <div className='chart-filter-container' style={{ display: 'flex', flexDirection: 'row' }}>
       {buttons}
     </div>
   );

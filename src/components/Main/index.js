@@ -12,14 +12,16 @@ const Main = () => {
     setChartOptions,
     chartData,
     setChartData,
-    select,
-    setSelect,
     primeChartData
   } = useChartData();
 
   const {
     stock,
-    getDailyAdjusted
+    getDailyAdjusted,
+    select,
+    setSelect,
+    header,
+
   } = useContext(AppContext);
 
 
@@ -55,6 +57,9 @@ const Main = () => {
         >Submit</Button>
       </form>
       <ChartSwitch select={select} clickChartTab={clickChartTab}/>
+<div>
+  {header.symbol} - {header.date}
+</div>
 
       <ChartSection data={chartData} options={chartOptions}/>
 

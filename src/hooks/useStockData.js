@@ -29,16 +29,20 @@ const stockReducer =(stock, action) => {
   }
 }
 
+const initHeader = {
+  symbol:'',
+  date:''
+}
 const useStockData = () => {
   const [stock, dispatch] = useReducer(stockReducer, initStock);
   const [select, setSelect] = useState('5. adjusted close');
-  
+  const [header, setHeader] = useState(initHeader);
   const getDailyAdjusted = async (tick) => {
     const data = await axios
     .get(`/api/daily/${tick}`)
     console.log(data.data.data['Time Series (Daily)']);
     dispatch({ type: GET_DAILY, data: data.data.data['Time Series (Daily)']})
-    
+    setHeader({ symbol: data.data.data['Meta Data']['2. Symbol'], date: data.data.data['Meta Data']['3. Last Refreshed']})
     // dispatch({type: GET_DAILY, data:data.data})
   }
 
@@ -46,7 +50,8 @@ const useStockData = () => {
     stock,
     getDailyAdjusted,
     select,
-    setSelect
+    setSelect,
+    header
   };
 };
 export default useStockData;

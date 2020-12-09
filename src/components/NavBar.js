@@ -5,6 +5,11 @@ const NavBar = () => {
 
   return (
     <nav className='nav-container'>
+      <Link to='/'>
+        <div className='nav-logo'>
+          Home
+      </div>
+      </Link>
       <Link to='/main'>
         <div className='nav-logo'>
           Daily
