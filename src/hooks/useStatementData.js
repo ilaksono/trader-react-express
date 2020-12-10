@@ -27,11 +27,11 @@ const useStatementData = () => {
     setStateMode(initMode);
   }
 
-  const getStatementData = async (key) => {
+  const getStatementData = async (ticker) => {
     const data = axios
-      .get(`/api/statements/${key}`);
+      .get(`/api/statements/${stateMode.mode}/${ticker}`);
     sortByDate(data.data.data.annualReports);
-    dispatch({ type: GET_CASH, data: data.data.data, key });
+    dispatch({ type: GET_CASH, data: data.data.data, key:stateMode.mode});
   };
   const sortByDate = (arr) =>
     arr

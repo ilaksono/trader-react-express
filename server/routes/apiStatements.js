@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const alpha = process.env.ALPHA_ARR.split(' ');
-let {i, incrementI, getURL, fetch} = require('../index'); 
+const {i, incrementI, getURL, fetch} = require('../index'); 
 
 const INCOME_STATEMENT = 'INCOME_STATEMENT';
 const BALANCE_SHEET = 'BALANCE_SHEET';

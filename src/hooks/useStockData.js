@@ -48,7 +48,7 @@ const useStockData = () => {
   const getDailyAdjusted = async (tick) => {
     const data = await axios
     .get(`/api/daily/${tick}`)
-    console.log(data.data.data['Time Series (Daily)']);
+    // console.log(data.data.data['Time Series (Daily)']);
     dispatch({ type: GET_DAILY, data: data.data.data['Time Series (Daily)']})
     setHeader({ symbol: data.data.data['Meta Data']['2. Symbol'], date: data.data.data['Meta Data']['3. Last Refreshed'], type: 'Daily'})
     // dispatch({type: GET_DAILY, data:data.data})
@@ -60,7 +60,7 @@ const useStockData = () => {
   const getIntra = async (tick) => {
     const data = await axios
       .get(`/api/intra/${tick}`);
-    console.log(data.data.data['Time Series (5min)']);
+    // console.log(data.data.data['Time Series (5min)']);
     dispatch({ type: GET_INTRA, data: data.data.data['Time Series (5min)'] });
     setHeader({ symbol: data.data.data['Meta Data']['2. Symbol'], date: data.data.data['Meta Data']['3. Last Refreshed'], type: '5min' })
   }

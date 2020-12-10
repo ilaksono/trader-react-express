@@ -9,6 +9,7 @@ import { Switch } from '@material-ui/core';
 import Statements from './Statements';
 const Main = () => {
   const [ticker, setTicker] = useState('');
+  const [blank, setBlank] = useState('');
   const {
     chartOptions,
     setChartOptions,
@@ -38,7 +39,12 @@ const Main = () => {
       getDailyAdjusted(ticker);
     else
       getIntra(ticker);
+    setBlank(ticker);
   };
+  useEffect(() => {
+    if (ticker.length)
+      getStatementData(blank);
+  }, [blank]);
 
   useEffect(() => {
     handleSubmit();
@@ -90,14 +96,16 @@ const Main = () => {
         <ChartSection data={chartData} options={chartOptions} />
 
       </div>
-      <Button onclick={() =>
-        setShowStates(prev => !prev)} >{showStates ? 'SHOW' : 'HIDE'}</Button>
+      <Button onClick={() =>
+        setShowStates(prev => !prev)} >{!showStates ? 'SHOW' : 'HIDE'}</Button>
       {showStates &&
 
         <div className='statements-container'>
           <Statements
             statement={statement}
-            stateMode={stateMode} />
+            stateMode={stateMode}
+            getStatementData={getStatementData}
+          />
         </div>
       }
 

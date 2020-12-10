@@ -29,14 +29,12 @@ const useDashboardData = () => {
     const data = all.map(each =>
       each.data.data
     );
-    console.log(data);
     //  dispatch({ type: GET_DASH, data });
   };
   const getGlobal = (id) => {
     return axios.get(`/api/global/${id}`);
   };
   const setPage = (event, num) => {
-    console.log(num);
     dispatch({ type: SET_PAGE, num });
   };
   return {

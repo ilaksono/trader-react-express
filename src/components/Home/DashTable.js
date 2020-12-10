@@ -37,7 +37,6 @@ function Row(props) {
   };
   let cls = 'green';
   let p = row.close / row.specs[0].open;
-  console.log(row.close, row.open);
   if (p < 1) {
     cls = 'red';
     p = 1 - p;
