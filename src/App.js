@@ -7,6 +7,8 @@ function App() {
     <div className="App">
       <Router>
         <NavBar />
+        <div className='nav-spacer'>
+        </div>
         <Switch>
           <Route exact path='/'>
             <Home />

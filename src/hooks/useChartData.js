@@ -69,7 +69,7 @@ const useChartData = () => {
       }],
       ready: true,
     });
-    setChartOptions(prev => ({ ...prev, scales: { yAxes: [{ ticks: { min: min * 0.9, max:1.1 * max } }] } }));
+    setChartOptions(prev => ({ ...prev, scales: { yAxes: [{ ticks: { min: min * 0.99, max:1.01 * max } }] } }));
   };
 
   return {

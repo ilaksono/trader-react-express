@@ -9,6 +9,10 @@
   opacity: 0.9;
   padding-left: 55px;
   padding-right: 55px;
+  position: fixed;
+  top: 0;
+  width: 100vw;
+  left: 0;
   box-shadow: 0 0 4px 4px rgb(199, 199, 199)
 }
 
@@ -44,7 +48,10 @@
   text-align: center;
 }
 .nav-spacer {
-  display: none;
+  display: block;
+  width: 100vw;
+  top:0;
+  height: 85px;
 }
 
 @media screen and (max-width: 650px) {

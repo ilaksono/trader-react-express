@@ -17,8 +17,8 @@ const DAILY_ADJ = 'TIME_SERIES_DAILY_ADJUSTED';
 const SYMBOL_SEARCH = 'SYMBOL_SEARCH';
 const GLOBAL_QUOTE = 'GLOBAL_QUOTE';
 const OVERVIEW = 'OVERVIEW';
-const INTRA_DAY = 'TIME_SERIES_INTRADAY'
-const INTRA_EX = 'TIME_SERIES_INTRADAY_EXTENDED'
+const INTRA_DAY = 'TIME_SERIES_INTRADAY';
+const INTRA_EX = 'TIME_SERIES_INTRADAY_EXTENDED';
 
 const primeData = () => {
   MongoClient.connect(url, { useUnifiedTopology: true }, async (err, client) => {
@@ -72,12 +72,33 @@ app.get('/api/daily/:id', async (req, res) => {
   }
 });
 
+app.get('/api/dash', async (req, res) => {
+  MongoClient.connect(url, { useUnifiedTopology: true }, async (err, client) => {
+    if (err)
+      return console.log(err);
+    try {
+
+      const db = client.db('trader');
+      const stocks = db.collection('aggregate');
+      stocks.find({}).sort({ T: 1 })
+        .toArray((err, result) => {
+          if (err) console.log(err);
+          res.json({ data: result });
+          client.close();
+        });
+    } catch (er) {
+      console.log(er);
+    }
+
+  });
+});
+
 app.get('/api/intra/:id', async (req, res) => {
   try {
-    const url = `https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=${req.params.id}&interval=5min&apikey=${process.env.ALPHA_API_KEY}`
+    const url = `https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=${req.params.id}&interval=5min&apikey=${process.env.ALPHA_API_KEY}`;
     const data = await fetch(url);
-    const A = await data.json()
-    res.json({data: A});
+    const A = await data.json();
+    res.json({ data: A });
   } catch (er) {
     console.log(er);
   }
@@ -137,6 +158,52 @@ app.get('/api/global/:id', async (req, res) => {
 
 // const dbb = require('./overview1208.json');
 
+const crossData = async () => {
+  MongoClient.connect(url, { useUnifiedTopology: true }, async (err, client) => {
+    try {
+      const db = client.db('trader');
+      const stocks1 = db.collection('index');
+      const stocks2 = db.collection('overviews');
+      const stocks3 = db.collection('aggregate')
+        .initializeOrderedBulkOp();
+      let i = 0;
+      stocks1.find({})
+        .toArray((err, data1) => {
+          if (err) console.log(err);
+          stocks2.find({})
+            .toArray((err2, data2) => {
+              if (err2) console.log(err2);
+              data2.forEach(async (view) => {
+                data1.find((entry) => {
+                  if (entry.symbol === view.T) {
+                    stocks3.insert({ ...view, name: entry.name });
+                    i++;
+                    console.log(i);
+
+
+                    return true;
+                  }
+                  return false;
+
+                });
+
+                if (i >= 8501)
+                  await stocks3.execute();
+              });
+            });
+
+        });
+
+      console.log('done');
+
+
+    } catch (er) {
+      console.log(er);
+    }
+    // client.close();
+  });
+};
+
 
 app.listen(PORT, () => {
   // console.log(index.length);
@@ -152,5 +219,6 @@ app.listen(PORT, () => {
   //   await stocks.execute();
   //   console.log('done');
   // })
+  // crossData();
   console.log('listening on ', PORT);
 });

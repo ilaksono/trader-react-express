@@ -44,6 +44,7 @@ const useStockData = () => {
   const [select, setSelect] = useState('5. adjusted close');
   const [header, setHeader] = useState(initHeader);
   const [daily, setDaily] = useState(true);
+  
   const getDailyAdjusted = async (tick) => {
     const data = await axios
     .get(`/api/daily/${tick}`)
@@ -62,8 +63,8 @@ const useStockData = () => {
     console.log(data.data.data['Time Series (5min)']);
     dispatch({ type: GET_INTRA, data: data.data.data['Time Series (5min)'] });
     setHeader({ symbol: data.data.data['Meta Data']['2. Symbol'], date: data.data.data['Meta Data']['3. Last Refreshed'], type: '5min' })
-
   }
+ 
 
   return {
     stock,

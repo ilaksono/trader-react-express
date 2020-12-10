@@ -27,7 +27,7 @@ const Main = () => {
     daily,
     getIntra
   } = useContext(AppContext);
-
+  
 
   const handleSubmit = () => {
     if (daily)
@@ -35,10 +35,11 @@ const Main = () => {
     else
       getIntra(ticker);
   };
-  
+
   useEffect(() => {
     handleSubmit();
-  }, [daily])
+  }, [daily]);
+
 
 
   useEffect(() => {
@@ -55,10 +56,10 @@ const Main = () => {
         Submit Any Ticker
       </h1>
       <Switch onChange={() => {
-        
-        swapIntraDaily()
-
-        }} checked={daily} name='daily' color='primary' />
+        swapIntraDaily();
+      }} checked={daily} name='daily' color='primary'
+      />
+      <label>Toggle {!daily ? 'Daily' : '5 min'}</label> 
       <form onSubmit={event => event.preventDefault()}>
         {/* <input
           value={ticker}
@@ -73,9 +74,9 @@ const Main = () => {
           onClick={handleSubmit}
         >Submit</Button>
       </form>
-      <ChartSwitch select={select} 
-      clickChartTab={clickChartTab} 
-      daily={daily}
+      <ChartSwitch select={select}
+        clickChartTab={clickChartTab}
+        daily={daily}
       />
       <div>
         {header.symbol} - {header.date} - {header.type}
