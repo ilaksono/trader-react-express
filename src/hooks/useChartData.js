@@ -46,7 +46,7 @@ const useChartData = () => {
     let min;
     primedVal = Object.keys(obj).map((key, i) => {
       let val = Number(obj[key][k]);
-      if(i === 0 || min > val)
+      if (i === 0 || min > val)
         min = val;
       primedLabels.unshift(key);
       if (max < val)
@@ -69,7 +69,7 @@ const useChartData = () => {
       }],
       ready: true,
     });
-    setChartOptions(prev => ({ ...prev, scales: { yAxes: [{ ticks: { min: min * 0.99, max:1.01 * max } }] } }));
+    setChartOptions(prev => ({ ...prev, scales: { yAxes: [{ ticks: { min: min * 0.99, max: 1.01 * max } }] } }));
   };
 
   return {

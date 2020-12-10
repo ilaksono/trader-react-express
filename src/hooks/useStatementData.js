@@ -1,5 +1,4 @@
 import { useReducer } from 'react';
-import { camelToTitle } from 'helpers/chartHelpers';
 import axios from 'axios';
 const GET_CASH = 'GET_CASH';
 const statReducer = (statement, action) => {
@@ -14,18 +13,30 @@ const statReducer = (statement, action) => {
 
 };
 
-const initStat = {
-
-};
+const initStat = {};
 const useStatementData = () => {
-  const [statement, dispatch] = useReducer(statReducer, initStat);
+  const [statement, dispatch]
+    = useReducer(statReducer, initStat);
 
   const getStatementData = async (key) => {
-    const data = axios.get(`/api/statements/${key}`);
+    const data = axios
+      .get(`/api/statements/${key}`);
+    sortByDate(data.data.data.annualReports);
     dispatch({ type: GET_CASH, data: data.data.data, key });
   };
+  const sortByDate = (arr) =>
+    arr
+      .sort((lp, rp) =>
+        new Date(rp['fiscalDateEnding'])
+          .getTime() >
+          new Date(lp['fiscalDateEnding'])
+            .getTime()
+          ? 1 : -1);
+
   return {
     statement,
     getStatementData
   };
 };
+
+export default useStatementData;
