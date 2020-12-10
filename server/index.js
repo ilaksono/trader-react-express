@@ -10,7 +10,7 @@ const fs = require('fs');
 const csv = require('csv-parser');
 const MongoClient = require('mongodb').MongoClient;
 const url = 'mongodb://localhost:27017';
-const index = require('./index.json');
+// const index = require('./index.json');
 
 const alpha = process.env.ALPHA_ARR.split(' ');
 const DAILY_ADJ = 'TIME_SERIES_DAILY_ADJUSTED';
@@ -19,11 +19,11 @@ const GLOBAL_QUOTE = 'GLOBAL_QUOTE';
 const OVERVIEW = 'OVERVIEW';
 const INTRA_DAY = 'TIME_SERIES_INTRADAY';
 const INTRA_EX = 'TIME_SERIES_INTRADAY_EXTENDED';
-let i = 0;
 
 const apiStatements = require('./routes/apiStatements');
 app.use('/api/statements', apiStatements());
 
+let i = 0;
 const incrementI = () => {
   i += 1;
   if (i >= alpha.length) i -= alpha.length;
@@ -232,5 +232,3 @@ app.listen(PORT, () => {
   // crossData();
   console.log('listening on ', PORT);
 });
-
-module.exports = {i, incrementI, getURL, fetch};

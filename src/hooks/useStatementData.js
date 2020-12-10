@@ -28,7 +28,7 @@ const useStatementData = () => {
   }
 
   const getStatementData = async (ticker) => {
-    const data = axios
+    const data = await axios
       .get(`/api/statements/${stateMode.mode}/${ticker}`);
     sortByDate(data.data.data.annualReports);
     dispatch({ type: GET_CASH, data: data.data.data, key:stateMode.mode});
