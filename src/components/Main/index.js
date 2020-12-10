@@ -28,7 +28,7 @@ const Main = () => {
     getIntra
   } = useContext(AppContext);
   
-
+  
   const handleSubmit = () => {
     if (daily)
       getDailyAdjusted(ticker);
