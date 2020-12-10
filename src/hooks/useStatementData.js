@@ -1,4 +1,4 @@
-import { useReducer } from 'react';
+import { useReducer, useState } from 'react';
 import axios from 'axios';
 const GET_CASH = 'GET_CASH';
 const statReducer = (statement, action) => {
@@ -12,11 +12,20 @@ const statReducer = (statement, action) => {
   }
 
 };
+const initMode = {
+  mode: 'balance',
+  page: 0
+}
 
 const initStat = {};
 const useStatementData = () => {
   const [statement, dispatch]
     = useReducer(statReducer, initStat);
+  const [stateMode, setStateMode] = useState(initMode);
+
+  const resetStateMode = () => {
+    setStateMode(initMode);
+  }
 
   const getStatementData = async (key) => {
     const data = axios
@@ -35,7 +44,9 @@ const useStatementData = () => {
 
   return {
     statement,
-    getStatementData
+    getStatementData,
+    stateMode,
+    resetStateMode
   };
 };
 

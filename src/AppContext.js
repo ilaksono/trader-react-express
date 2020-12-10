@@ -1,6 +1,6 @@
 import React from 'react';
 import useStockData from 'hooks/useStockData';
-
+import useStatementData from 'hooks/useStatementData';
 const AppContext = React.createContext();
 
 export const AppProvider = ({ children }) => {
@@ -15,6 +15,13 @@ export const AppProvider = ({ children }) => {
     getIntra,
   } = useStockData();
     
+  const {
+    statement,
+    getStatementData,
+    stateMode,
+    resetStateMode,
+    
+  } = useStatementData();
   return (
     <AppContext.Provider value={{
       stock,
@@ -25,6 +32,10 @@ export const AppProvider = ({ children }) => {
       swapIntraDaily,
       daily,
       getIntra,
+      statement,
+      getStatementData,
+      stateMode,
+      resetStateMode,
     }}>
       {children}
     </AppContext.Provider>

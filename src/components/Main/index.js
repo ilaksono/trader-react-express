@@ -6,7 +6,7 @@ import AppContext from 'AppContext';
 import ChartSwitch from './ChartSwitch';
 import SymbolAuto from './SymbolAuto';
 import { Switch } from '@material-ui/core';
-
+import Statements from './Statements';
 const Main = () => {
   const [ticker, setTicker] = useState('');
   const {
@@ -25,7 +25,11 @@ const Main = () => {
     header,
     swapIntraDaily,
     daily,
-    getIntra
+    getIntra,
+    statement,
+    getStatementData,
+    stateMode,
+    resetStateMode
   } = useContext(AppContext);
 
 
@@ -86,12 +90,15 @@ const Main = () => {
         <ChartSection data={chartData} options={chartOptions} />
 
       </div>
-      <Button onclick={() => setShowStates(prev => !prev)} >{showStates ? 'SHOW': 'HIDE'}</Button>
+      <Button onclick={() =>
+        setShowStates(prev => !prev)} >{showStates ? 'SHOW' : 'HIDE'}</Button>
       {showStates &&
 
-      <div>
-        I AM STATEMENTS
-      </div>
+        <div className='statements-container'>
+          <Statements
+            statement={statement}
+            stateMode={stateMode} />
+        </div>
       }
 
     </div>
