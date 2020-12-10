@@ -5,18 +5,18 @@ import {
   ComboboxOption,
 } from "@reach/combobox";
 import "@reach/combobox/styles.css";
-import axios from 'axios'
-import {useState} from 'react';
+import axios from 'axios';
+import { useState } from 'react';
 const SymbolAuto = props => {
   const [options, setOptions] = useState([]);
 
   const getAuto = async () => {
     const res = await axios
-    .get(`/api/autocomplete/${props.ticker}`)
+      .get(`/api/autocomplete/${props.ticker}`);
     setOptions(res.data.data);
     return res;
-  }
-  
+  };
+
   return (
     <>
       <Combobox
@@ -38,7 +38,6 @@ const SymbolAuto = props => {
           placeholder="AAPL"
         />
         <ComboboxPopover>
-
           {options.length && options.map(({ symbol }) =>
             <ComboboxOption key={symbol} value={symbol}>
             </ComboboxOption>

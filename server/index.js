@@ -12,7 +12,7 @@ const MongoClient = require('mongodb').MongoClient;
 const url = 'mongodb://localhost:27017';
 const index = require('./index.json');
 
-const alpha = process.env.ALPHA_ARR;
+const alpha = process.env.ALPHA_ARR.split(' ');
 const DAILY_ADJ = 'TIME_SERIES_DAILY_ADJUSTED';
 const SYMBOL_SEARCH = 'SYMBOL_SEARCH';
 const GLOBAL_QUOTE = 'GLOBAL_QUOTE';
@@ -65,15 +65,14 @@ app.use(cors());
 
 
 
-const getURL = (type = DAILY_ADJ, tick) => {
-
-  return `https://www.alphavantage.co/query?function=${type}&symbol=${tick}&apikey=${process.env.ALPHA_API_KEY}`;
-};
+const getURL = (type = DAILY_ADJ, tick) => 
+  `https://www.alphavantage.co/query?function=${type}&symbol=${tick}&apikey=${alpha[i]}`;
 
 app.get('/api/daily/:id', async (req, res) => {
   try {
     const tick = req.params.id || 'AAPL';
     const data = await fetch(getURL(DAILY_ADJ, tick));
+    incrementI();
     const data2 = await data.json();
     res.json({ data: data2 });
   } catch (er) {
@@ -104,7 +103,8 @@ app.get('/api/dash', async (req, res) => {
 
 app.get('/api/intra/:id', async (req, res) => {
   try {
-    const url = `https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=${req.params.id}&interval=5min&apikey=${process.env.ALPHA_API_KEY}`;
+    const url = `https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=${req.params.id}&interval=5min&apikey=${alpha[i]}`;
+    incrementI();
     const data = await fetch(url);
     const A = await data.json();
     res.json({ data: A });
@@ -158,6 +158,7 @@ app.get('/api/global/:id', async (req, res) => {
     const data = await fetch(
       getURL(GLOBAL_QUOTE, req.params.id)
     );
+    incrementI();
     const json = await data.json();
     res.json({ data: json });
   } catch (er) {

@@ -1,8 +1,9 @@
+
 const calculateChart = (data) => {
 
 };
 
-const camelToTitle = (camel) => {
+export const camelToTitle = (camel) => {
   const title = camel.split('');
   const spaceArr = [];
   let adjust = 0;
@@ -18,3 +19,6 @@ const camelToTitle = (camel) => {
   title[0] = title[0].toUpperCase();
   return title.join('');
 };
+
+
+

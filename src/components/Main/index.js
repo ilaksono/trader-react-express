@@ -16,7 +16,7 @@ const Main = () => {
     setChartData,
     primeChartData
   } = useChartData();
-
+  const [showStates, setShowStates] = useState(false);
   const {
     stock,
     getDailyAdjusted,
@@ -27,8 +27,8 @@ const Main = () => {
     daily,
     getIntra
   } = useContext(AppContext);
-  
-  
+
+
   const handleSubmit = () => {
     if (daily)
       getDailyAdjusted(ticker);
@@ -51,39 +51,48 @@ const Main = () => {
     setSelect(val);
   };
   return (
-    <div>
-      <h1>
-        Submit Any Ticker
+    <div className='main-layout'>
+      <div>
+
+        <h1>
+          Submit Any Ticker
       </h1>
-      <Switch onChange={() => {
-        swapIntraDaily();
-      }} checked={daily} name='daily' color='primary'
-      />
-      <label>Toggle {!daily ? 'Daily' : '5 min'}</label> 
-      <form onSubmit={event => event.preventDefault()}>
-        {/* <input
+        <Switch onChange={() => {
+          swapIntraDaily();
+        }} checked={daily} name='daily' color='primary'
+        />
+        <label>Toggle {!daily ? 'Daily' : '5 min'}</label>
+        <form onSubmit={event => event.preventDefault()}>
+          {/* <input
           value={ticker}
           onChange={event =>
             setTicker(event.target.value)}
         /> */}
-        <SymbolAuto ticker={ticker} setTicker={setTicker} />
-        <Button
-          type='submit'
-          variant='outlined'
-          color='primary'
-          onClick={handleSubmit}
-        >Submit</Button>
-      </form>
-      <ChartSwitch select={select}
-        clickChartTab={clickChartTab}
-        daily={daily}
-      />
-      <div>
-        {header.symbol} - {header.date} - {header.type}
+          <SymbolAuto ticker={ticker} setTicker={setTicker} />
+          <Button
+            type='submit'
+            variant='outlined'
+            color='primary'
+            onClick={handleSubmit}
+          >Submit</Button>
+        </form>
+        <ChartSwitch select={select}
+          clickChartTab={clickChartTab}
+          daily={daily}
+        />
+        <div>
+          {header.symbol} - {header.date} - {header.type}
+        </div>
+        <ChartSection data={chartData} options={chartOptions} />
+
       </div>
+      <Button onclick={() => setShowStates(prev => !prev)} >{showStates ? 'SHOW': 'HIDE'}</Button>
+      {showStates &&
 
-      <ChartSection data={chartData} options={chartOptions} />
-
+      <div>
+        I AM STATEMENTS
+      </div>
+      }
 
     </div>
 
