@@ -4,66 +4,15 @@ import { Button } from '@material-ui/core';
 import ChartSection from 'components/Main/ChartSection';
 import useChartData from 'hooks/useChartData';
 import AppContext from 'AppContext';
-import ChartSwitch from 'components/Main/ChartSwitch';
 import SymbolAuto from 'components/Main/SymbolAuto';
 import Statements from 'components/Main/Statements';
 import 'styles/Main.scss';
 import StatementOptions from 'components/Main/StatementOptions';
 import { TypeChooser } from "react-stockcharts/lib/helper";
 import CandleStickChartWithMA from './CandlePointer';
+import useCandleData from 'hooks/useCandleData';
+import { Switch } from '@material-ui/core';
 
-const data = [
-  {
-    open: 12115,
-    high: 12116,
-    low: 12110,
-    close: 12114,
-    date: new Date('2020-12-11'),
-    volume: 1000
-  },
-  {
-    open: 12114,
-    high: 12115,
-    low: 12112,
-    close: 12115,
-    date: new Date('2020-12-12'),
-    volume: 2000
-  },
-  {
-    open: 12114,
-    high: 12115,
-    low: 12112,
-    close: 12115,
-    date: new Date('2020-12-13'),
-    volume: 2000
-  },
-  {
-    open: 12114,
-    high: 12115,
-    low: 12112,
-    close: 12115,
-    date: new Date('2020-12-14'),
-    volume: 2000
-  },
-  {
-    open: 12114,
-    high: 12120,
-    low: 12112,
-    close: 12115,
-    date: new Date('2020-12-15'),
-    volume: 4000
-
-  },
-  {
-    open: 12114,
-    high: 12115,
-    low: 12112,
-    close: 12115,
-    date: new Date('2020-12-16'),
-    volume: 2000
-  },
-
-];
 
 const Candle = (props) => {
 
@@ -71,37 +20,31 @@ const Candle = (props) => {
   const [ticker, setTicker] = useState('');
   const [blank, setBlank] = useState('');
   const {
-    chartOptions,
-    setChartOptions,
-    chartData,
-    setChartData,
+
     primeChartData
   } = useChartData();
+  const {
+    candleData,
+    getCandleData,
+    candleHeader
+  } = useCandleData();
   const [showStates, setShowStates]
     = useState(false);
   const {
     stock,
-    getDailyAdjusted,
     select,
-    setSelect,
-    header,
     swapIntraDaily,
     daily,
-    getIntra,
     statement,
     getStatementData,
     stateMode,
-    resetStateMode,
     setStatementMode
 
   } = useContext(AppContext);
 
 
   const handleSubmit = () => {
-    if (daily)
-      getDailyAdjusted(ticker);
-    else
-      getIntra(ticker);
+    getCandleData(ticker, daily ? 'daily' : 'intra');
     setBlank(ticker);
   };
   useEffect(() => {
@@ -110,7 +53,8 @@ const Candle = (props) => {
   }, [blank, stateMode]);
 
   useEffect(() => {
-    handleSubmit();
+    if (ticker.length)
+      handleSubmit();
   }, [daily]);
 
 
@@ -120,9 +64,7 @@ const Candle = (props) => {
       primeChartData(stock, select);
     // eslint-disable-next-line
   }, [stock, select]);
-  const clickChartTab = (val) => {
-    setSelect(val);
-  };
+  
   return (
     <>
       <div className='main-layout'>
@@ -139,21 +81,23 @@ const Candle = (props) => {
                 >Submit</Button>
               </div>
             </form>
-            <ChartSwitch select={select}
-              clickChartTab={clickChartTab}
-              swapIntraDaily={swapIntraDaily}
-              daily={daily}
+            <Switch onChange={() => {
+              swapIntraDaily();
+            }} checked={daily} name='daily' color='primary'
             />
           </div>
 
           <div>
-            {header.symbol} - {header.date} - {header.type}
+            {candleHeader.symbol} - {candleHeader.date} - {candleHeader.type}
           </div>
+          {
+            candleData.length && 
           <TypeChooser>
             {/* {type => <Chart type={type} data={data} />} */}
-            {type => <CandleStickChartWithMA type={type} data={data} />}
-
+            {type => <CandleStickChartWithMA type={type} data={candleData} />}
           </TypeChooser>
+
+          }
         </div>
         {showStates &&
 
@@ -183,8 +127,9 @@ const Candle = (props) => {
       </div>
     </>
   );
-  
+
 };
 
 export default Candle;
 // webgradients.com
+

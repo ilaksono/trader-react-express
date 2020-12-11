@@ -1,14 +1,12 @@
 @import './helpers';
 
 .nav-container {
-  @include flexbox(row, space-between, center);
+  @include flexbox(row, space-around, center);
   height: 75px;
   padding-bottom: 2px;
   background-color: $darkp;
   color: white;
   opacity: 0.9;
-  padding-left: 55px;
-  padding-right: 55px;
   position: fixed;
   top: 0;
   width: 100vw;

@@ -20,9 +20,6 @@ function App() {
           <Route path='/main'>
             <Main />
           </Route>
-          <Route path='/intra'>
-            <Main />
-          </Route>
           <Route path='/charts'>
             <Candle />
           </Route>

@@ -15,9 +15,9 @@ const NavBar = () => {
           Daily
       </div>
       </Link>
-      <Link to='/intra'>
+      <Link to='/charts'>
         <div className='nav-logo'>
-          Intraday
+          Charts
       </div>
       </Link>
       <Link to='/currency'>
