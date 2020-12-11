@@ -2,6 +2,8 @@ import Main from 'components/Main';
 import { Switch, BrowserRouter as Router, Route } from 'react-router-dom';
 import NavBar from 'components/NavBar';
 import Home from 'components/Home';
+import Background from 'components/Background';
+import 'styles/Background.scss';
 function App() {
   return (
     <div className="App">
@@ -21,6 +23,7 @@ function App() {
           </Route>
         </Switch>
       </Router>
+      <Background/>
     </div>
   );
 }

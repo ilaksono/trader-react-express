@@ -60,11 +60,11 @@ const useChartData = () => {
       datasets: [{
         label: k,
         // backgroundColor: 'none',
-        borderColor: 'red',
+        borderColor: '#1E0253',
         data: primedVal,
         fill: true,
         // hoverBackgroundColor: '#1E0253',
-        pointBackgroundColor: 'red'
+        pointBackgroundColor: '#1E0253'
         // pointHoverBackgroundColor: '#1E0253'
       }],
       ready: true,

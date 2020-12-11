@@ -1,5 +1,6 @@
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
+import { Switch } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
   /*   muiButton: {
@@ -42,10 +43,10 @@ const options = [
   { key: '2. high', name: 'High' },
   { key: '3. low', name: 'Low' },
   { key: '4. close', name: 'Close' },
-  { key: '5. adjusted close', name: 'Adjusted C' },
+  { key: '5. adjusted close', name: 'Adj' },
   { key: '6. volume', name: 'Volume' },
-  { key: '7. dividend amount', name: 'Dividend' },
-  { key: '8. split coefficient', name: 'Split Coeff' }
+  { key: '7. dividend amount', name: 'Div' },
+  { key: '8. split coefficient', name: 'Split' }
 ];
 
 const optionsIntra = [
@@ -103,6 +104,11 @@ const ChartSwitch = (props) => {
   return (
     <div className='chart-filter-container' style={{ display: 'flex', flexDirection: 'row' }}>
       {buttons}
+      <Switch onChange={() => {
+        props.swapIntraDaily();
+      }} checked={props.daily} name='daily' color='primary'
+      />
+      <label>{!props.daily ? 'Daily' : '5 min'}</label>
     </div>
   );
 };

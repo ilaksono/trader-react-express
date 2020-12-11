@@ -5,8 +5,9 @@ import useChartData from 'hooks/useChartData';
 import AppContext from 'AppContext';
 import ChartSwitch from './ChartSwitch';
 import SymbolAuto from './SymbolAuto';
-import { Switch } from '@material-ui/core';
 import Statements from './Statements';
+import 'styles/Main.scss';
+import StatementOptions from './StatementOptions';
 const Main = () => {
   const [ticker, setTicker] = useState('');
   const [blank, setBlank] = useState('');
@@ -17,7 +18,8 @@ const Main = () => {
     setChartData,
     primeChartData
   } = useChartData();
-  const [showStates, setShowStates] = useState(false);
+  const [showStates, setShowStates]
+    = useState(false);
   const {
     stock,
     getDailyAdjusted,
@@ -30,7 +32,9 @@ const Main = () => {
     statement,
     getStatementData,
     stateMode,
-    resetStateMode
+    resetStateMode,
+    setStatementMode
+
   } = useContext(AppContext);
 
 
@@ -44,7 +48,7 @@ const Main = () => {
   useEffect(() => {
     if (ticker.length)
       getStatementData(blank);
-  }, [blank]);
+  }, [blank, stateMode]);
 
   useEffect(() => {
     handleSubmit();
@@ -61,56 +65,66 @@ const Main = () => {
     setSelect(val);
   };
   return (
-    <div className='main-layout'>
-      <div>
-
-        <h1>
-          Submit Any Ticker
-      </h1>
-        <Switch onChange={() => {
-          swapIntraDaily();
-        }} checked={daily} name='daily' color='primary'
-        />
-        <label>Toggle {!daily ? 'Daily' : '5 min'}</label>
-        <form onSubmit={event => event.preventDefault()}>
-          {/* <input
+    <>
+      <div className='main-layout'>
+        <div className='chart-container'>
+          <div style={{ display: 'flex', flexDirection: 'row' }}>
+            <form onSubmit={event => event.preventDefault()}>
+              {/* <input
           value={ticker}
           onChange={event =>
             setTicker(event.target.value)}
         /> */}
-          <SymbolAuto ticker={ticker} setTicker={setTicker} />
-          <Button
-            type='submit'
-            variant='outlined'
-            color='primary'
-            onClick={handleSubmit}
-          >Submit</Button>
-        </form>
-        <ChartSwitch select={select}
-          clickChartTab={clickChartTab}
-          daily={daily}
-        />
-        <div>
-          {header.symbol} - {header.date} - {header.type}
-        </div>
-        <ChartSection data={chartData} options={chartOptions} />
+              <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
 
+                <SymbolAuto ticker={ticker} setTicker={setTicker} />
+                <Button
+                  type='submit'
+                  color='default'
+                  onClick={handleSubmit}
+                >Submit</Button>
+              </div>
+            </form>
+            <ChartSwitch select={select}
+              clickChartTab={clickChartTab}
+              swapIntraDaily={swapIntraDaily}
+              daily={daily}
+            />
+          </div>
+
+          <div>
+            {header.symbol} - {header.date} - {header.type}
+          </div>
+          <ChartSection data={chartData} options={chartOptions} />
+
+        </div>
+        {showStates &&
+
+          <div className='statements-container'>
+            <StatementOptions
+              setStatementMode={setStatementMode}
+              stateMode={stateMode}
+            />
+            <Statements
+              statement={statement}
+              stateMode={stateMode}
+              getStatementData={getStatementData}
+              showStates={showStates}
+            />
+          </div>
+        }
+        <Button onClick={() =>
+          setShowStates(prev => !prev)}
+          style={{
+            position: 'fixed',
+            right: showStates ? '330px': '80px',
+            top: '120px'
+          }}
+          variant='outlined'
+        >{!showStates ? 'SHOW' : 'HIDE'}
+        </Button>
       </div>
-      <Button onClick={() =>
-        setShowStates(prev => !prev)} >{!showStates ? 'SHOW' : 'HIDE'}</Button>
-      {showStates &&
-
-        <div className='statements-container'>
-          <Statements
-            statement={statement}
-            stateMode={stateMode}
-            getStatementData={getStatementData}
-          />
-        </div>
-      }
-
-    </div>
-
+    </>
   );
 };
 

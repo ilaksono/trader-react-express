@@ -1,5 +1,11 @@
 import { camelToTitle } from 'helpers/chartHelpers';
 import { useEffect } from 'react';
+import 'styles/Animations.scss';
+const key = {
+  'balance': 'Balance Sheet',
+  'income': 'Income Statement',
+  'cash': 'Cash Flow'
+};
 
 const Statements = (props) => {
 
@@ -8,33 +14,37 @@ const Statements = (props) => {
   }, []);
   let parsedList = [];
   if (Object.keys(props.statement).length) {
-    parsedList = Object
-      .entries
-      (
-        props.statement
-        [props.stateMode.mode]
-          .annualReports
-        [props.stateMode.page]
-      )
-      .map(([key, value], i) => {
-        return (
-          <tr className='each-statement'>
-            <td>
-              {camelToTitle(key)}
-            </td>
-            <td>
-              {value}
-            </td>
-          </tr>
-        );
-      });
+    if (props.statement[props.stateMode.mode]) {
+      parsedList = Object
+        .entries
+        (
+          props.statement
+          [props.stateMode.mode]
+            .annualReports
+          [props.stateMode.page]
+        )
+        .map(([key, value], i) => {
+          return (
+            <tr className='each-statement'>
+              <td>
+                <strong>
+                  {camelToTitle(key)}
+                </strong>
 
+              </td>
+              <td>
+                {value}
+              </td>
+            </tr>
+          );
+        });
+    }
   }
 
   return (
-    <div>
+    <div className={`${props.showStates ? 'fade-right' : 'fade-out-right'}`}>
       <h2>
-        Annual Reports
+        Annual Reports - {key[props.stateMode.mode]}
       </h2>
       <table>
         {parsedList}

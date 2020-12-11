@@ -15,7 +15,7 @@ const statReducer = (statement, action) => {
 const initMode = {
   mode: 'balance',
   page: 0
-}
+};
 
 const initStat = {};
 const useStatementData = () => {
@@ -25,28 +25,36 @@ const useStatementData = () => {
 
   const resetStateMode = () => {
     setStateMode(initMode);
+  };
+  const setStatementMode = (key) => {
+    setStateMode({...stateMode, mode: key});
   }
 
   const getStatementData = async (ticker) => {
     const data = await axios
       .get(`/api/statements/${stateMode.mode}/${ticker}`);
     sortByDate(data.data.data.annualReports);
-    dispatch({ type: GET_CASH, data: data.data.data, key:stateMode.mode});
+    dispatch({ type: GET_CASH, data: data.data.data, key: stateMode.mode });
   };
-  const sortByDate = (arr) =>
-    arr
-      .sort((lp, rp) =>
-        new Date(rp['fiscalDateEnding'])
-          .getTime() >
-          new Date(lp['fiscalDateEnding'])
-            .getTime()
-          ? 1 : -1);
+  const sortByDate = (arr) => {
+    if (arr.length)
+      return arr
+        .sort((lp, rp) =>
+          new Date(rp['fiscalDateEnding'])
+            .getTime() >
+            new Date(lp['fiscalDateEnding'])
+              .getTime()
+            ? 1 : -1);
+    else return [];
+  };
+
 
   return {
     statement,
     getStatementData,
     stateMode,
-    resetStateMode
+    resetStateMode,
+    setStatementMode
   };
 };
 

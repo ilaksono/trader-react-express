@@ -20,7 +20,9 @@ export const AppProvider = ({ children }) => {
     getStatementData,
     stateMode,
     resetStateMode,
-    
+    setStatementMode
+
+
   } = useStatementData();
   return (
     <AppContext.Provider value={{
@@ -36,6 +38,8 @@ export const AppProvider = ({ children }) => {
       getStatementData,
       stateMode,
       resetStateMode,
+      setStatementMode
+
     }}>
       {children}
     </AppContext.Provider>

@@ -2,7 +2,7 @@
 
 .nav-container {
   @include flexbox(row, space-between, center);
-  height: 85px;
+  height: 75px;
   padding-bottom: 2px;
   background-color: $darkp;
   color: white;
@@ -13,6 +13,7 @@
   top: 0;
   width: 100vw;
   left: 0;
+  z-index: 1;
   box-shadow: 0 0 4px 4px rgb(199, 199, 199)
 }
 
@@ -51,7 +52,7 @@
   display: block;
   width: 100vw;
   top:0;
-  height: 85px;
+  height: 75px;
 }
 
 @media screen and (max-width: 650px) {
