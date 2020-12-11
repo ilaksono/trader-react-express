@@ -4,6 +4,8 @@ import NavBar from 'components/NavBar';
 import Home from 'components/Home';
 import Background from 'components/Background';
 import 'styles/Background.scss';
+import Candle from 'components/Charts';
+
 function App() {
   return (
     <div className="App">
@@ -20,6 +22,9 @@ function App() {
           </Route>
           <Route path='/intra'>
             <Main />
+          </Route>
+          <Route path='/charts'>
+            <Candle />
           </Route>
         </Switch>
       </Router>
