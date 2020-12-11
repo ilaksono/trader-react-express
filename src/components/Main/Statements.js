@@ -42,7 +42,7 @@ const Statements = (props) => {
   }
 
   return (
-    <div className={`${props.showStates ? 'fade-right' : 'fade-out-right'}`}>
+    <div >
       <h2>
         Annual Reports - {key[props.stateMode.mode]}
       </h2>

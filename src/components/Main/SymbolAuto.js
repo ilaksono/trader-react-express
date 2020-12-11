@@ -6,6 +6,7 @@ import {
 } from "@reach/combobox";
 import "@reach/combobox/styles.css";
 import axios from 'axios';
+import 'styles/Scrollbars.scss';
 import { useState } from 'react';
 const SymbolAuto = props => {
   const [options, setOptions] = useState([]);

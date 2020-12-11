@@ -100,7 +100,7 @@ const Main = () => {
         </div>
         {showStates &&
 
-          <div className='statements-container'>
+          <div className='statements-container fade-right'>
             <StatementOptions
               setStatementMode={setStatementMode}
               stateMode={stateMode}
@@ -117,7 +117,7 @@ const Main = () => {
           setShowStates(prev => !prev)}
           style={{
             position: 'fixed',
-            right: showStates ? '330px': '80px',
+            right: showStates ? '340px': '80px',
             top: '120px'
           }}
           variant='outlined'
