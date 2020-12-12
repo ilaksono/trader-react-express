@@ -20,43 +20,43 @@ const OVERVIEW = 'OVERVIEW';
 const INTRA_DAY = 'TIME_SERIES_INTRADAY';
 const INTRA_EX = 'TIME_SERIES_INTRADAY_EXTENDED';
 
-const apiStatements = require('./routes/apiStatements');
-app.use('/api/statements', apiStatements());
-
 let i = 0;
 const incrementI = () => {
   i += 1;
   if (i >= alpha.length) i -= alpha.length;
   return i;
 };
-const primeData = () => {
-  MongoClient.connect(url, { useUnifiedTopology: true }, async (err, client) => {
-    let i = 0;
+const apiStatements = require('./routes/apiStatements');
+app.use('/api/statements', apiStatements(i, incrementI));
 
-    try {
-      const db = client.db('trader');
-      const stocks = db.collection('overviews').initializeOrderedBulkOp();
-      const A = await setInterval(async () => {
-        const data = await fetch(getURL(OVERVIEW, index[i++].symbol));
-        const json = await data.json();
-        stocks.insert(json);
-        if (i >= 400 || i >= index.length) {
-          clearTimeout(A);
-          return;
-        }
-      }, 500);
-      await stocks.execute();
-      console.log('done');
-    } catch (er) {
-      console.log(er);
-    }
+// const primeData = () => {
+//   MongoClient.connect(url, { useUnifiedTopology: true }, async (err, client) => {
+//     let i = 0;
 
-    client.close();
+//     try {
+//       const db = client.db('trader');
+//       const stocks = db.collection('overviews').initializeOrderedBulkOp();
+//       const A = await setInterval(async () => {
+//         const data = await fetch(getURL(OVERVIEW, index[i++].symbol));
+//         const json = await data.json();
+//         stocks.insert(json);
+//         if (i >= 400 || i >= index.length) {
+//           clearTimeout(A);
+//           return;
+//         }
+//       }, 500);
+//       await stocks.execute();
+//       console.log('done');
+//     } catch (er) {
+//       console.log(er);
+//     }
+
+//     client.close();
 
 
 
-  });
-};
+//   });
+// };
 
 
 
