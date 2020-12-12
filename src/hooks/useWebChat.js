@@ -21,5 +21,9 @@ const useWebChat = () => {
     return () => socket.close();
   }, []);
 
+  return {
+    chat
+  }
+
 }
 export default useWebChat;
