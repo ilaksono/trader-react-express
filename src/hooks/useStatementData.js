@@ -37,7 +37,7 @@ const useStatementData = () => {
     dispatch({ type: GET_CASH, data: data.data.data, key: stateMode.mode });
   };
   const sortByDate = (arr) => {
-    if (arr.length)
+    if (arr)
       return arr
         .sort((lp, rp) =>
           new Date(rp['fiscalDateEnding'])

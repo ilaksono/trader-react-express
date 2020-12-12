@@ -3,6 +3,8 @@ import axios from 'axios';
 const useCandleData = () => {
   const [candleData, setCandleData] = useState([]);
   const [candleHeader, setHeader] = useState({});
+  const [adjust, setAdjust] = useState(true);
+  
   const primeCandle = (data, type) => {
     if (!Object.keys(data))
       return [];
@@ -13,12 +15,16 @@ const useCandleData = () => {
         open: Number(value['1. open']),
         high: Number(value['2. high']),
         low: Number(value['3. low']),
-        close: Number(value['4. close']),
+        close: Number(value[adjust ? '5. adjusted close' : '4. close']),
         volume: Number(value[type === 'daily' ? '6. volume': '5. volume']),
       });
     }
     return arr;
   };
+
+  const toggleAdjusted = () => {
+    setAdjust(prev => !prev);
+  }
   const getCandleData = async (tick, type = 'daily') => {
     try {
       const data = await axios
@@ -40,7 +46,9 @@ const useCandleData = () => {
   return {
     candleData,
     getCandleData,
-    candleHeader
+    candleHeader,
+    toggleAdjusted,
+    adjust
   };
 };
 

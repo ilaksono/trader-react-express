@@ -26,7 +26,9 @@ const Candle = (props) => {
   const {
     candleData,
     getCandleData,
-    candleHeader
+    candleHeader,
+    toggleAdjusted,
+    adjust
   } = useCandleData();
   const [showStates, setShowStates]
     = useState(false);
@@ -55,7 +57,7 @@ const Candle = (props) => {
   useEffect(() => {
     if (ticker.length)
       handleSubmit();
-  }, [daily]);
+  }, [daily, adjust]);
 
 
 
@@ -85,6 +87,12 @@ const Candle = (props) => {
               swapIntraDaily();
             }} checked={daily} name='daily' color='primary'
             />
+            <label>{!daily ? 'Daily' : '5 min'}</label>
+            <Switch onChange={() => {
+              toggleAdjusted();
+            }} checked={adjust} name='daily' color='primary'
+            />
+            <label>{adjust ? 'Adjusted' : 'Close'}</label>
           </div>
 
           <div>
