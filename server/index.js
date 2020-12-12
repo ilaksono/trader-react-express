@@ -11,6 +11,9 @@ const csv = require('csv-parser');
 const MongoClient = require('mongodb').MongoClient;
 const url = 'mongodb://localhost:27017';
 // const index = require('./index.json');
+const server = require("http").Server(app);
+const WebSocket = require("ws");
+const wss = new WebSocket.Server({ server });
 
 const alpha = process.env.ALPHA_ARR.split(' ');
 const DAILY_ADJ = 'TIME_SERIES_DAILY_ADJUSTED';
@@ -58,6 +61,32 @@ app.use('/api/statements', apiStatements(i, incrementI));
 //   });
 // };
 
+wss.on("connection", socket => {
+  socket.onmessage = event => {
+    console.log(`Message Received: ${event.data}`);
+    if (event.data === "ping") {
+      socket.send(JSON.stringify("pong"));
+    }
+  };
+  socket.on('close', function close() {
+    console.log('it died');
+  });
+});
+
+
+function updateChat(user, msg) {
+  wss.clients.forEach(function eachClient(client) {
+    if (client.readyState === WebSocket.OPEN) {
+      client.send(
+        JSON.stringify({
+          type: "PUBLIC_CHAT",
+          msg,
+          user
+        })
+      );
+    }
+  });
+}
 
 
 app.use(bodyParser.json());
