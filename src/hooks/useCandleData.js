@@ -10,7 +10,7 @@ const useCandleData = () => {
   const [candleData, setCandleData] = useState([]);
   const [candleHeader, setHeader] = useState({});
   const [adjust, setAdjust] = useState(true);
-  const [candleErr, setCandleErr] = useState();
+  const [candleErr, setCandleErr] = useState(initErr);
   const primeCandle = (data, type) => {
     if (!Object.keys(data))
       return [];

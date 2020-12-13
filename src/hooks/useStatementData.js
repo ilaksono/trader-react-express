@@ -18,8 +18,8 @@ const initMode = {
 };
 const initErr = {
   type: '',
-  msg:''
-}
+  msg: ''
+};
 
 const initStat = {};
 const useStatementData = () => {
@@ -32,16 +32,22 @@ const useStatementData = () => {
     setStateMode(initMode);
   };
   const setStatementMode = (key) => {
-    setStateMode({...stateMode, mode: key});
-  }
+    setStateMode({ ...stateMode, mode: key });
+  };
 
   const getStatementData = async (ticker) => {
-    const data = await axios
-      .get(`/api/statements/${stateMode.mode}/${ticker}`);
-    if (!data.data.data)
-      return setStateErr({type:'NO_STATEMENT', msg:`Could not find statements for ${ticker}`})  
-    sortByDate(data.data.data.annualReports);
-    dispatch({ type: GET_CASH, data: data.data.data, key: stateMode.mode });
+    try {
+      const data = await axios
+        .get(`/api/statements/${stateMode.mode}/${ticker}`);
+      if (!data.data.data)
+        return setStateErr({ type: 'NO_STATEMENT', msg: `Could not find statements for ${ticker}` });
+      sortByDate(data.data.data.annualReports);
+      dispatch({ type: GET_CASH, data: data.data.data, key: stateMode.mode });
+    } catch (er) {
+      console.log(er);
+      return setStateErr({ type: 'NO_STATEMENT', msg: `Could not find statements for ${ticker}` });
+
+    }
   };
   const sortByDate = (arr) => {
     if (arr)
@@ -56,7 +62,7 @@ const useStatementData = () => {
   };
   const resetStateErr = () => {
     setStateErr(initErr);
-  }
+  };
 
 
   return {

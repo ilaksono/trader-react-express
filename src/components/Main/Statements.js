@@ -1,5 +1,5 @@
 import { camelToTitle } from 'helpers/chartHelpers';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import 'styles/Animations.scss';
 const key = {
   'balance': 'Balance Sheet',
@@ -9,12 +9,15 @@ const key = {
 
 const Statements = (props) => {
 
+  const [err, setErr] = useState('')
   useEffect(() => {
     console.log('axios');
   }, []);
   let parsedList = [];
   if (Object.keys(props.statement).length) {
-    if (props.statement[props.stateMode.mode]) {
+    if (props.statement[props.stateMode.mode] && !props.err.type) {
+      if(!props.statement[props.stateMode.mode].annualReports) return [];
+      if (!props.statement[props.stateMode.mode].annualReports[0]) return []
       parsedList = Object
         .entries
         (

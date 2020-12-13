@@ -127,6 +127,7 @@ const Candle = (props) => {
               stateMode={stateMode}
               getStatementData={getStatementData}
               showStates={showStates}
+              err={candleErr}
             />
           </div>
         }

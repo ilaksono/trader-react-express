@@ -123,6 +123,7 @@ const Main = () => {
                   stateMode={stateMode}
                   getStatementData={getStatementData}
                   showStates={showStates}
+                  err={stockErr}
                 />
               </div>
               :
