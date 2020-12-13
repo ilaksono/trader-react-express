@@ -16,12 +16,17 @@ const initMode = {
   mode: 'balance',
   page: 0
 };
+const initErr = {
+  type: '',
+  msg:''
+}
 
 const initStat = {};
 const useStatementData = () => {
   const [statement, dispatch]
     = useReducer(statReducer, initStat);
   const [stateMode, setStateMode] = useState(initMode);
+  const [stateErr, setStateErr] = useState(initErr);
 
   const resetStateMode = () => {
     setStateMode(initMode);
@@ -33,6 +38,8 @@ const useStatementData = () => {
   const getStatementData = async (ticker) => {
     const data = await axios
       .get(`/api/statements/${stateMode.mode}/${ticker}`);
+    if (!data.data.data)
+      return setStateErr({type:'NO_STATEMENT', msg:`Could not find statements for ${ticker}`})  
     sortByDate(data.data.data.annualReports);
     dispatch({ type: GET_CASH, data: data.data.data, key: stateMode.mode });
   };
@@ -47,6 +54,9 @@ const useStatementData = () => {
             ? 1 : -1);
     else return [];
   };
+  const resetStateErr = () => {
+    setStateErr(initErr);
+  }
 
 
   return {
@@ -54,7 +64,9 @@ const useStatementData = () => {
     getStatementData,
     stateMode,
     resetStateMode,
-    setStatementMode
+    setStatementMode,
+    stateErr,
+    resetStateErr
   };
 };
 

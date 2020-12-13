@@ -13,6 +13,8 @@ export const AppProvider = ({ children }) => {
     swapIntraDaily,
     daily,
     getIntra,
+    stockErr,
+    resetStockErr
   } = useStockData();
     
   const {
@@ -20,7 +22,9 @@ export const AppProvider = ({ children }) => {
     getStatementData,
     stateMode,
     resetStateMode,
-    setStatementMode
+    setStatementMode,
+    stateErr,
+    resetStateErr
 
 
   } = useStatementData();
@@ -38,7 +42,11 @@ export const AppProvider = ({ children }) => {
       getStatementData,
       stateMode,
       resetStateMode,
-      setStatementMode
+      setStatementMode,
+      stateErr,
+      resetStateErr,
+      stockErr,
+      resetStockErr
 
     }}>
       {children}

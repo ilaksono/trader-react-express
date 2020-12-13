@@ -1,10 +1,16 @@
 import { useState } from 'react';
 import axios from 'axios';
+
+const initErr = {
+  type:'',
+  msg:''
+}
+
 const useCandleData = () => {
   const [candleData, setCandleData] = useState([]);
   const [candleHeader, setHeader] = useState({});
   const [adjust, setAdjust] = useState(true);
-  
+  const [candleErr, setCandleErr] = useState();
   const primeCandle = (data, type) => {
     if (!Object.keys(data))
       return [];
@@ -21,7 +27,9 @@ const useCandleData = () => {
     }
     return arr;
   };
-
+  const resetCandleErr = () => {
+    setCandleErr(initErr);
+  }
   const toggleAdjusted = () => {
     setAdjust(prev => !prev);
   }
@@ -29,6 +37,8 @@ const useCandleData = () => {
     try {
       const data = await axios
         .get(`/api/${type}/${tick}`);
+        if(!data.data.data)
+          setCandleErr({type:'NO_CANDLE', msg:`Could not get candle data for ${tick}`})
       const raw = data.data.data[`Time Series (${type === 'daily' ? 'Daily' : '5min'})`];
       const cpy = primeCandle(raw, type);
       setCandleData(cpy);
@@ -39,6 +49,7 @@ const useCandleData = () => {
       });
       return cpy;
     } catch (er) {
+      setCandleErr({ type: 'NO_CANDLE', msg: `Could not get candle data for ${tick}` })
       console.log(er);
     }
   };
@@ -48,7 +59,9 @@ const useCandleData = () => {
     getCandleData,
     candleHeader,
     toggleAdjusted,
-    adjust
+    adjust,
+    candleErr,
+    resetCandleErr
   };
 };
 

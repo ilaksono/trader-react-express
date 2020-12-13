@@ -1,7 +1,6 @@
 import Chart from './Chart';
 import { useState, useContext, useEffect } from 'react';
 import { Button } from '@material-ui/core';
-import ChartSection from 'components/Main/ChartSection';
 import useChartData from 'hooks/useChartData';
 import AppContext from 'AppContext';
 import SymbolAuto from 'components/Main/SymbolAuto';
@@ -28,7 +27,9 @@ const Candle = (props) => {
     getCandleData,
     candleHeader,
     toggleAdjusted,
-    adjust
+    adjust,
+    candleErr,
+    resetCandleErr
   } = useCandleData();
   const [showStates, setShowStates]
     = useState(false);
@@ -59,14 +60,16 @@ const Candle = (props) => {
       handleSubmit();
   }, [daily, adjust]);
 
-
+  useEffect(() => {
+    resetCandleErr();
+  }, [candleData]);
 
   useEffect(() => {
     if (Object.keys(stock))
       primeChartData(stock, select);
     // eslint-disable-next-line
   }, [stock, select]);
-  
+
   return (
     <>
       <div className='main-layout'>
@@ -99,11 +102,16 @@ const Candle = (props) => {
             {candleHeader.symbol} - {candleHeader.date} - {candleHeader.type}
           </div>
           {
-            candleData.length && 
-          <TypeChooser>
-            {/* {type => <Chart type={type} data={data} />} */}
-            {type => <CandleStickChartWithMA type={type} data={candleData} />}
-          </TypeChooser>
+            (candleData.length && !candleErr.type) &&
+            <TypeChooser>
+              {/* {type => <Chart type={type} data={data} />} */}
+              {type => <CandleStickChartWithMA type={type} data={candleData} />}
+            </TypeChooser>
+          }
+          {candleErr.type &&
+            <div>
+              {candleErr.msg}
+            </div>
 
           }
         </div>

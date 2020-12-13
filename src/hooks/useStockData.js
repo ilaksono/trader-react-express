@@ -39,15 +39,22 @@ const initHeader = {
   date:'',
   type:'Daily'
 }
+const initErr = {
+  type: '',
+  msg: ''
+}
 const useStockData = () => {
   const [stock, dispatch] = useReducer(stockReducer, initStock);
   const [select, setSelect] = useState('5. adjusted close');
   const [header, setHeader] = useState(initHeader);
   const [daily, setDaily] = useState(true);
-  
+  const [stockErr, setStockErr] = useState(initErr)
+
   const getDailyAdjusted = async (tick) => {
     const data = await axios
     .get(`/api/daily/${tick}`)
+    if(!data.data.data)
+     return setStockErr({type:'NO_STOCK', msg:`Could not find stock data for ${tick}.`})
     // console.log(data.data.data['Time Series (Daily)']);
     dispatch({ type: GET_DAILY, data: data.data.data['Time Series (Daily)']})
     setHeader({ symbol: data.data.data['Meta Data']['2. Symbol'], date: data.data.data['Meta Data']['3. Last Refreshed'], type: 'Daily'})
@@ -55,6 +62,10 @@ const useStockData = () => {
   }
   const swapIntraDaily = () => {
     setDaily(!daily);
+  }
+
+  const resetStockErr = () => {
+    setStockErr(initErr);
   }
 
   const getIntra = async (tick) => {
@@ -74,7 +85,9 @@ const useStockData = () => {
     header,
     swapIntraDaily,
     daily,
-    getIntra
+    getIntra,
+    stockErr,
+    resetStockErr
   };
 };
 export default useStockData;

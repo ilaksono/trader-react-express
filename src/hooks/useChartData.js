@@ -37,7 +37,6 @@ const initOptions = {
 const useChartData = () => {
   const [chartData, setChartData] = useState(initData);
   const [chartOptions, setChartOptions] = useState(initOptions);
-
   const primeChartData = (obj, k = '1. open') => {
 
     let primedLabels = [];
@@ -55,6 +54,7 @@ const useChartData = () => {
     });
     primedVal = primedVal.reverse();
 
+    
     setChartData({
       labels: primedLabels,
       datasets: [{

@@ -33,37 +33,44 @@ const Main = () => {
     getStatementData,
     stateMode,
     resetStateMode,
-    setStatementMode
-
+    setStatementMode,
+    stateErr,
+    resetStateErr,
+    stockErr,
+    resetStockErr
   } = useContext(AppContext);
 
-
   const handleSubmit = () => {
+    resetStockErr();
     if (daily)
       getDailyAdjusted(ticker);
     else
       getIntra(ticker);
     setBlank(ticker);
   };
+
+  const clickChartTab = (val) => {
+    setSelect(val);
+  };
+
+  useEffect(() => {
+    resetStateErr();
+  }, [statement]);
   useEffect(() => {
     if (ticker.length)
       getStatementData(blank);
   }, [blank, stateMode]);
-
   useEffect(() => {
     handleSubmit();
   }, [daily]);
-
-
-
   useEffect(() => {
     if (Object.keys(stock))
       primeChartData(stock, select);
     // eslint-disable-next-line
   }, [stock, select]);
-  const clickChartTab = (val) => {
-    setSelect(val);
-  };
+
+
+
   return (
     <>
       <div className='main-layout'>
@@ -76,7 +83,11 @@ const Main = () => {
             setTicker(event.target.value)}
         /> */}
               <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
-
+                {stockErr.type &&
+                  <div>
+                    {stockErr.msg}
+                  </div>
+                }
                 <SymbolAuto ticker={ticker} setTicker={setTicker} />
                 <Button
                   type='submit'
@@ -99,25 +110,32 @@ const Main = () => {
 
         </div>
         {showStates &&
+          (
+            !stateErr.type ?
 
-          <div className='statements-container fade-right'>
-            <StatementOptions
-              setStatementMode={setStatementMode}
-              stateMode={stateMode}
-            />
-            <Statements
-              statement={statement}
-              stateMode={stateMode}
-              getStatementData={getStatementData}
-              showStates={showStates}
-            />
-          </div>
+              <div className='statements-container fade-right'>
+                <StatementOptions
+                  setStatementMode={setStatementMode}
+                  stateMode={stateMode}
+                />
+                <Statements
+                  statement={statement}
+                  stateMode={stateMode}
+                  getStatementData={getStatementData}
+                  showStates={showStates}
+                />
+              </div>
+              :
+              <div className='statements-container'>
+                {stateErr.msg}
+              </div>
+          )
         }
         <Button onClick={() =>
           setShowStates(prev => !prev)}
           style={{
             position: 'fixed',
-            right: showStates ? '340px': '80px',
+            right: showStates ? '340px' : '80px',
             top: '120px'
           }}
           variant='outlined'
