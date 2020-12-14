@@ -151,7 +151,7 @@ const Candle = (props) => {
           setShowStates(prev => !prev)}
           style={{
             position: 'fixed',
-            right: showStates ? '340px' : '80px',
+            right: showStates ? '380px' : '80px',
             top: '220px',
             zIndex: 7
 

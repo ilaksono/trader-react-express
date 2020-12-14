@@ -20,7 +20,7 @@ const Side = (props) => {
             variant='outlined'
             style={{
               position: 'fixed',
-              right: props.showStates ? (chartOpen ? '51.5vw' : '27vw') : (chartOpen ? '27vw' : '0')
+              right: props.showStates ? (chartOpen ? '55vw' : '30vw') : (chartOpen ? '30vw' : '0')
             }}
           >
             {chartOpen ? 'HIDE' : 'SHOW'}
@@ -32,7 +32,7 @@ const Side = (props) => {
         <div className='fade-right side-menu'
           style={{
             position: 'fixed',
-            right: props.showStates ? '26.5vw' : '0',
+            right: props.showStates ? '30vw' : '0',
             top: '83.5px',
           }}>
           <h1>
