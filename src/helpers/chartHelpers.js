@@ -20,5 +20,23 @@ export const camelToTitle = (camel) => {
   return title.join('');
 };
 
+export const formatLargeNumber = (num) => {
+  if (num === 'null' || num === 'None' || !num)
+    return 0;
+  num = Math.floor(Number(num));
+  const arr = JSON.stringify(num).split('');
+  let cntr = 0;
+  for (let i = arr.length - 1; i >= 0; i--) {
+    cntr++;
+    if (cntr % 3 === 0)
+      arr.splice(i, 0, ', ');
+  }
+  if (arr[0] === ', ')
+    arr.shift();
+  return arr.join('');
+};
+
+// console.log(formatLargeNumber('123123213213212'));
+
 
 

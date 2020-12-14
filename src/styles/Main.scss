@@ -10,8 +10,9 @@
   width: 98vw;
   max-height: calc(100vh - 100px);
 }
+
 .statements-container {
-  width: 25vw;
+  width: 29vw;
   position: fixed;
   right: 0;
   height: calc(100vh - 100px);
@@ -21,6 +22,7 @@
   scroll-padding-top: 4px;
   padding-left: 15px;
 }
+
 .chart-container {
   width: 72vw;
   height: 100%;
