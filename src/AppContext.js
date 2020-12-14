@@ -1,6 +1,7 @@
 import React from 'react';
 import useStockData from 'hooks/useStockData';
 import useStatementData from 'hooks/useStatementData';
+import useStatementChart from 'hooks/useStatementChart';
 const AppContext = React.createContext();
 
 export const AppProvider = ({ children }) => {
@@ -16,7 +17,10 @@ export const AppProvider = ({ children }) => {
     stockErr,
     resetStockErr
   } = useStockData();
-    
+    const {
+      stateData,
+      primeData
+    } = useStatementChart();
   const {
     statement,
     getStatementData,
@@ -49,7 +53,9 @@ export const AppProvider = ({ children }) => {
       stockErr,
       resetStockErr,
       changeStatePage,
-      resetStatePage
+      resetStatePage,
+      stateData,
+      primeData
 
     }}>
       {children}

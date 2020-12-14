@@ -55,7 +55,6 @@ const useChartData = () => {
     });
     primedVal = primedVal.reverse();
 
-    
     setChartData({
       labels: primedLabels,
       datasets: [{
