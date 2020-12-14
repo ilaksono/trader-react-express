@@ -36,8 +36,12 @@ const Statements = (props) => {
         )
         .map(([key, value], i) => {
           return (
-            <tr className='each-statement' 
-             onClick={() => props.primeData(props.statement[props.stateMode.mode][freq], key, freq)}
+            <tr className='each-statement'
+              onClick={() =>
+                props.primeData(props.statement[props.stateMode.mode][freq], key, freq)}
+                style={{
+                  cursor:'pointer'
+                }}
             >
               <td>
                 <strong>
@@ -55,12 +59,15 @@ const Statements = (props) => {
   }
 
   return (
-    <div >
-      <StatementsDate
-        freq={freq}
-        arr={props.statement[props.stateMode.mode][freq]}
-        changeStatePage={props.changeStatePage}
-      />
+    <div>
+      {
+        props.statement[props.stateMode.mode][freq] &&
+        <StatementsDate
+          freq={freq}
+          arr={props.statement[props.stateMode.mode][freq]}
+          changeStatePage={props.changeStatePage}
+        />
+      }
       <h2>
         {freq === 'annualReports' ? 'Annual Reports' : 'Quarterly Reports'} - {key[props.stateMode.mode]}
       </h2>

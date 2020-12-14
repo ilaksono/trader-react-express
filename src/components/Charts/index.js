@@ -12,7 +12,7 @@ import CandleStickChartWithMA from './CandlePointer';
 import useCandleData from 'hooks/useCandleData';
 import { Switch } from '@material-ui/core';
 import StatementsDate from 'components/Main/StatementsDate';
-
+import Side from 'components/Side';
 const Candle = (props) => {
 
 
@@ -31,8 +31,10 @@ const Candle = (props) => {
     candleErr,
     resetCandleErr
   } = useCandleData();
+
   const [showStates, setShowStates]
     = useState(false);
+
   const {
     stock,
     select,
@@ -43,7 +45,8 @@ const Candle = (props) => {
     stateMode,
     setStatementMode,
     changeStatePage,
-    resetStatePage
+    resetStatePage,
+    primeData
 
   } = useContext(AppContext);
 
@@ -138,8 +141,9 @@ const Candle = (props) => {
               getStatementData={getStatementData}
               showStates={showStates}
               err={candleErr}
-            resetStatePage={resetStatePage}
-            changeStatePage={changeStatePage}
+              resetStatePage={resetStatePage}
+              changeStatePage={changeStatePage}
+              primeData={primeData}
             />
           </div>
         }
@@ -148,12 +152,15 @@ const Candle = (props) => {
           style={{
             position: 'fixed',
             right: showStates ? '340px' : '80px',
-            top: '120px'
+            top: '220px',
+            zIndex: 7
+
           }}
           variant='outlined'
         >{!showStates ? 'SHOW' : 'HIDE'}
         </Button>
       </div>
+      <Side showStates={showStates} />
     </>
   );
 

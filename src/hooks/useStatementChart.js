@@ -47,16 +47,17 @@ const useStatementChart = () => {
 
   const primeData = (arr, key, freq) => {
     let dates = [];
-    let min = arr[0][key];
+    let min = Number(arr[0][key]);
     let max = 0;
     const cpy = arr.map(val => {
-      if (min > val[key])
-        min = val[key];
-      if (max < val[key])
-        max = val[key];
+      const can = Number(val[key]);
+      if (min > can)
+        min = Number(can);
+      if (max < can)
+        max = can;
 
       dates.unshift(val.fiscalDateEnding);
-      return val[key];
+      return can;
     });
     cpy.reverse();
 
@@ -64,9 +65,9 @@ const useStatementChart = () => {
       labels: dates,
       datasets: [{
         label: `${key} - ${freq}`,
-        backgroundColor: '#1E0253',
+        // backgroundColor: '#1E0253',
         // backgroundColor: 'rgb(255, 99, 132)',
-        borderColor: 'rgb(255, 99, 132)',
+        borderColor: cpy[cpy.length - 1] - cpy[0] >= 0 ? 'green' : 'red',
         data: cpy
       }],
       ready: true
@@ -75,8 +76,8 @@ const useStatementChart = () => {
       scales: {
         yAxes: [{
           ticks: {
-            min,
-            max,
+            min: 0.9 * min,
+            max: 1.1 * max,
             maxTicksLimit: 5
           },
           scaleLabel: {

@@ -1,0 +1,8 @@
+@import './helpers.scss';
+.side-menu {
+  width: 25vw;
+  height: calc(100vh - 100px);
+  box-shadow: 0 0 3px 3px grey;
+  z-index: 6;
+  background-color: white;
+}

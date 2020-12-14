@@ -9,11 +9,12 @@ import Statements from './Statements';
 import 'styles/Main.scss';
 import StatementOptions from './StatementOptions';
 import StatementsDate from './StatementsDate';
-
+import Side from 'components/Side';
 
 const Main = () => {
   const [ticker, setTicker] = useState('');
   const [blank, setBlank] = useState('');
+
   const {
     chartOptions,
     setChartOptions,
@@ -154,12 +155,16 @@ const Main = () => {
           style={{
             position: 'fixed',
             right: showStates ? '340px' : '80px',
-            top: '120px'
+            top: '220px',
+            zIndex: '7'
           }}
           variant='outlined'
         >{!showStates ? 'SHOW' : 'HIDE'}
         </Button>
       </div>
+      <Side 
+        showStates={showStates}
+      />
     </>
   );
 };

@@ -5,3 +5,9 @@ This is a stock market trading app designed to provide financial services to all
 ## Stack
 
 Uses React, Express, MongoDB primarily.
+
+## Screenshots (In Development)
+
+!["Dashboard Page"](https://github.com/ilaksono/trader-react-express/blob/master/docs/Dashboard-Page.png)
+!["Chart Page"](https://github.com/ilaksono/trader-react-express/blob/master/docs/Chart-Page.png)
+
