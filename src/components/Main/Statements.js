@@ -1,5 +1,8 @@
 import { camelToTitle } from 'helpers/chartHelpers';
 import { useEffect, useState } from 'react';
+import { Switch } from '@material-ui/core';
+import StatementsDate from './StatementsDate';
+
 import 'styles/Animations.scss';
 const key = {
   'balance': 'Balance Sheet',
@@ -9,21 +12,26 @@ const key = {
 
 const Statements = (props) => {
 
-  const [err, setErr] = useState('')
-  useEffect(() => {
-    console.log('axios');
-  }, []);
+  const [freq, setFreq] = useState('annualReports');
+  const [err, setErr] = useState('');
+
+  const handleFreqChange = () => {
+    props.resetStatePage();
+    setFreq(prev =>
+      prev === 'annualReports' ? 'quarterlyReports' : 'annualReports');
+  };
+
   let parsedList = [];
   if (Object.keys(props.statement).length) {
     if (props.statement[props.stateMode.mode] && !props.err.type) {
-      if(!props.statement[props.stateMode.mode].annualReports) return [];
-      if (!props.statement[props.stateMode.mode].annualReports[0]) return []
+      if (!props.statement[props.stateMode.mode].annualReports) return [];
+      if (!props.statement[props.stateMode.mode].annualReports[0]) return [];
       parsedList = Object
         .entries
         (
           props.statement
           [props.stateMode.mode]
-            .annualReports
+          [freq]
           [props.stateMode.page]
         )
         .map(([key, value], i) => {
@@ -46,9 +54,21 @@ const Statements = (props) => {
 
   return (
     <div >
+      <StatementsDate
+        freq={freq}
+        arr={props.statement[props.stateMode.mode][freq]}
+        changeStatePage={props.changeStatePage}
+      />
       <h2>
-        Annual Reports - {key[props.stateMode.mode]}
+        {freq === 'annualReports' ? 'Annual Reports' : 'Quarterly Reports'} - {key[props.stateMode.mode]}
       </h2>
+      <Switch
+        onChange={handleFreqChange}
+        checked={freq === 'annualReports' ? false : true}
+        name='freq' color='primary'
+      />
+      <label>{freq === 'annualReports' ? 'Annual' : 'Quarterly'}</label>
+
       <table>
         {parsedList}
       </table>

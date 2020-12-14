@@ -8,6 +8,9 @@ import SymbolAuto from './SymbolAuto';
 import Statements from './Statements';
 import 'styles/Main.scss';
 import StatementOptions from './StatementOptions';
+import StatementsDate from './StatementsDate';
+
+
 const Main = () => {
   const [ticker, setTicker] = useState('');
   const [blank, setBlank] = useState('');
@@ -37,7 +40,10 @@ const Main = () => {
     stateErr,
     resetStateErr,
     stockErr,
-    resetStockErr
+    resetStockErr,
+    changeStatePage,
+    resetStatePage,
+
   } = useContext(AppContext);
 
   const handleSubmit = () => {
@@ -118,12 +124,21 @@ const Main = () => {
                   setStatementMode={setStatementMode}
                   stateMode={stateMode}
                 />
+                {
+                  // statement[stateMode.mode].annualReports &&
+                  // <StatementsDate
+                  //   arr={statement[stateMode.mode].annualReports}
+                  //   changeStatePage={changeStatePage}
+                  // />
+                }
                 <Statements
                   statement={statement}
                   stateMode={stateMode}
                   getStatementData={getStatementData}
                   showStates={showStates}
                   err={stockErr}
+                  resetStatePage={resetStatePage}
+                  changeStatePage={changeStatePage}
                 />
               </div>
               :

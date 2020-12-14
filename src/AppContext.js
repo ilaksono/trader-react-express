@@ -24,8 +24,9 @@ export const AppProvider = ({ children }) => {
     resetStateMode,
     setStatementMode,
     stateErr,
-    resetStateErr
-
+    resetStateErr,
+    changeStatePage,
+    resetStatePage
 
   } = useStatementData();
   return (
@@ -46,7 +47,9 @@ export const AppProvider = ({ children }) => {
       stateErr,
       resetStateErr,
       stockErr,
-      resetStockErr
+      resetStockErr,
+      changeStatePage,
+      resetStatePage
 
     }}>
       {children}

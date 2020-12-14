@@ -21,7 +21,11 @@ const initErr = {
   msg: ''
 };
 
-const initStat = {};
+const initStat = {
+  type: '',
+  data: {},
+  key: ''
+};
 const useStatementData = () => {
   const [statement, dispatch]
     = useReducer(statReducer, initStat);
@@ -41,7 +45,11 @@ const useStatementData = () => {
         .get(`/api/statements/${stateMode.mode}/${ticker}`);
       if (!data.data.data)
         return setStateErr({ type: 'NO_STATEMENT', msg: `Could not find statements for ${ticker}` });
+      if(data.data.data.Note) {
+        return setStateErr({ type: 'NO_STATEMENT', msg: `Could not find statements for ${ticker}` });
+      }
       sortByDate(data.data.data.annualReports);
+      sortByDate(data.data.data.quarterlyReports);
       dispatch({ type: GET_CASH, data: data.data.data, key: stateMode.mode });
     } catch (er) {
       console.log(er);
@@ -49,8 +57,16 @@ const useStatementData = () => {
 
     }
   };
+
+  const resetStatePage = () => {
+    setStateMode(prev => ({ ...prev, page: 0 }));
+  };
+
+  const changeStatePage = (page) => {
+    setStateMode({ ...stateMode, page });
+  };
   const sortByDate = (arr) => {
-    if (arr)
+    if (arr) {
       return arr
         .sort((lp, rp) =>
           new Date(rp['fiscalDateEnding'])
@@ -58,6 +74,7 @@ const useStatementData = () => {
             new Date(lp['fiscalDateEnding'])
               .getTime()
             ? 1 : -1);
+    }
     else return [];
   };
   const resetStateErr = () => {
@@ -72,7 +89,9 @@ const useStatementData = () => {
     resetStateMode,
     setStatementMode,
     stateErr,
-    resetStateErr
+    resetStateErr,
+    changeStatePage,
+    resetStatePage
   };
 };
 

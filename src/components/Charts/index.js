@@ -11,7 +11,7 @@ import { TypeChooser } from "react-stockcharts/lib/helper";
 import CandleStickChartWithMA from './CandlePointer';
 import useCandleData from 'hooks/useCandleData';
 import { Switch } from '@material-ui/core';
-
+import StatementsDate from 'components/Main/StatementsDate';
 
 const Candle = (props) => {
 
@@ -41,7 +41,9 @@ const Candle = (props) => {
     statement,
     getStatementData,
     stateMode,
-    setStatementMode
+    setStatementMode,
+    changeStatePage,
+    resetStatePage
 
   } = useContext(AppContext);
 
@@ -122,12 +124,22 @@ const Candle = (props) => {
               setStatementMode={setStatementMode}
               stateMode={stateMode}
             />
+            {
+              // statement[stateMode.mode] &&
+              // <StatementsDate
+              //   arr={statement[stateMode.mode].annualReports}
+              //   changeStatePage={changeStatePage}
+              // />
+            }
+
             <Statements
               statement={statement}
               stateMode={stateMode}
               getStatementData={getStatementData}
               showStates={showStates}
               err={candleErr}
+            resetStatePage={resetStatePage}
+            changeStatePage={changeStatePage}
             />
           </div>
         }
