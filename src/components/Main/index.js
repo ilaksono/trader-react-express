@@ -43,6 +43,7 @@ const Main = () => {
     resetStockErr,
     changeStatePage,
     resetStatePage,
+    primeData,
 
   } = useContext(AppContext);
 
@@ -139,6 +140,7 @@ const Main = () => {
                   err={stockErr}
                   resetStatePage={resetStatePage}
                   changeStatePage={changeStatePage}
+                  primeData={primeData}
                 />
               </div>
               :

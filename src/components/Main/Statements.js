@@ -36,7 +36,9 @@ const Statements = (props) => {
         )
         .map(([key, value], i) => {
           return (
-            <tr className='each-statement'>
+            <tr className='each-statement' 
+             onClick={() => props.primeData(props.statement[props.stateMode.mode][freq], key, freq)}
+            >
               <td>
                 <strong>
                   {camelToTitle(key)}

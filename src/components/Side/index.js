@@ -21,7 +21,7 @@ const Side = () => {
         )
       }
       {
-        (chartOpen && stateData.data.ready) && 
+        (chartOpen && stateData.data.ready) &&
         <div>
           <ChartSection
             data={stateData.data}
