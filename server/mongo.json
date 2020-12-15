@@ -1,0 +1,59 @@
+db.createCollection("usrs", {
+  validator: {
+    $jsonSchema:{
+      bsonType: "object",
+      required: ["username", "email", "password"],
+      properties: {
+        username: {
+          bsonType:"string",
+          description:"must be string",
+          unique: true
+        },
+        password: {
+          bsonType:"string",
+          description:"must be string"
+        },
+        email: {
+          bsonType:"string",
+          description:"must be string",
+          unique: true
+        },
+      }
+    }
+  }
+})
+
+db.runCommand( {
+   collMod: "usrs",
+   validator: { $jsonSchema: {
+      bsonType: "object",
+      required: [ "username", "email", "password" ],
+      properties: {
+         username: {
+            bsonType: "string",
+            description: "must be a string and is required",
+            unique: true
+         },
+         password: {
+            bsonType: "string",
+            description: "must be a string and is required"
+         },
+         email: {
+            bsonType: "string",
+            description: "must be a string and is required",
+            unique: true
+         }
+      }
+   } },
+   validationLevel: "moderate"
+})
+
+db.runCommand({
+  collMod: "usrs",
+  validator: {
+    $and:[
+      {"username": {uniqueItems: true}},
+      {"email": {uniqueItems: true}}
+    ]
+  }
+})

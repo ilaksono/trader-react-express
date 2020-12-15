@@ -50,7 +50,7 @@ const Statements = (props) => {
 
               </td>
               <td style={{
-                minWidth:'160px'
+                minWidth: '160px'
               }}>
                 {(key !== 'fiscalDateEnding' && key !== 'reportedCurrency') ? formatLargeNumber(value) : value}
               </td>

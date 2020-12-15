@@ -32,6 +32,10 @@ const incrementI = () => {
 const apiStatements = require('./routes/apiStatements');
 app.use('/api/statements', apiStatements(i, incrementI));
 
+const apiUsers = require('./routes/apiUsers');
+app.use('/api/users', apiUsers(MongoClient, url));
+
+
 // const primeData = () => {
 //   MongoClient.connect(url, { useUnifiedTopology: true }, async (err, client) => {
 //     let i = 0;
