@@ -25,12 +25,12 @@ const INTRA_EX = 'TIME_SERIES_INTRADAY_EXTENDED';
 
 let i = 0;
 const incrementI = () => {
-  i += 1;
+  i++;
   if (i >= alpha.length) i -= alpha.length;
-  return i;
+  // return i;
 };
 const apiStatements = require('./routes/apiStatements');
-app.use('/api/statements', apiStatements(i, incrementI));
+app.use('/api/statements', apiStatements({i, incrementI}));
 
 const apiUsers = require('./routes/apiUsers');
 app.use('/api/users', apiUsers(MongoClient, url));
@@ -98,14 +98,16 @@ app.use(cors());
 
 
 
-const getURL = (type = DAILY_ADJ, tick) => 
+const getURL = (type = DAILY_ADJ, tick) =>
   `https://www.alphavantage.co/query?function=${type}&symbol=${tick}&apikey=${alpha[i]}`;
 
 app.get('/api/daily/:id', async (req, res) => {
   try {
     const tick = req.params.id || 'AAPL';
     const data = await fetch(getURL(DAILY_ADJ, tick));
+    console.log(i);
     incrementI();
+    console.log(i,'after')
     const data2 = await data.json();
     res.json({ data: data2 });
   } catch (er) {

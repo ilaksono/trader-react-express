@@ -95,7 +95,7 @@ const Candle = (props) => {
               swapIntraDaily();
             }} checked={daily} name='daily' color='primary'
             />
-            <label>{!daily ? 'Daily' : '5 min'}</label>
+            <label>{daily ? 'Daily' : '5 min'}</label>
             <Switch onChange={() => {
               toggleAdjusted();
             }} checked={adjust} name='daily' color='primary'

@@ -1,4 +1,4 @@
-import { camelToTitle, formatLargeNumber } from 'helpers/chartHelpers';
+import { camelToTitle, formatNum } from 'helpers/chartHelpers';
 import { useEffect, useState } from 'react';
 import { Switch } from '@material-ui/core';
 import StatementsDate from './StatementsDate';
@@ -52,7 +52,10 @@ const Statements = (props) => {
               <td style={{
                 minWidth: '160px'
               }}>
-                {(key !== 'fiscalDateEnding' && key !== 'reportedCurrency') ? formatLargeNumber(value) : value}
+                {(key !== 'fiscalDateEnding'
+                  && key !== 'reportedCurrency')
+                  ? formatNum(value) : value
+                }
               </td>
             </tr>
           );

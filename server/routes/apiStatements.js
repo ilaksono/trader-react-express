@@ -10,6 +10,12 @@ const BALANCE_SHEET = 'BALANCE_SHEET';
 const CASH_FLOW = 'CASH_FLOW';
 
 
+let i = 0;
+const incrementI = () => {
+  i++;
+  if (i >= alpha.length) i -= alpha.length;
+  // return i;
+};
 // let i = 0;
 // const incrementI = () => {
 //   i += 1;
@@ -17,13 +23,14 @@ const CASH_FLOW = 'CASH_FLOW';
 //   return i;
 // };
 
-module.exports = (i, incrementI) => {
+module.exports = () => {
   const getURL = (type = DAILY_ADJ, tick) =>
     `https://www.alphavantage.co/query?function=${type}&symbol=${tick}&apikey=${alpha[i]}`;
 
   router.get('/income/:id', async (req, res) => {
     try {
       const data = await fetch(getURL(INCOME_STATEMENT, req.params.id));
+      console.log(i)
       incrementI();
       const data2 = await data.json();
       res.json({ data: data2 });
@@ -36,6 +43,8 @@ module.exports = (i, incrementI) => {
   router.get('/balance/:id', async (req, res) => {
     try {
       const data = await fetch(getURL(BALANCE_SHEET, req.params.id));
+      console.log(i)
+
       incrementI();
       const data2 = await data.json();
       res.json({ data: data2 });
@@ -48,6 +57,8 @@ module.exports = (i, incrementI) => {
   router.get('/cash/:id', async (req, res) => {
     try {
       const data = await fetch(getURL(CASH_FLOW, req.params.id));
+      console.log(i)
+
       incrementI();
       const data2 = await data.json();
       res.json({ data: data2 });

@@ -51,7 +51,7 @@ db.runCommand( {
 db.runCommand({
   collMod: "usrs",
   validator: {
-    $and:[
+    "$and":[
       {"username": {uniqueItems: true}},
       {"email": {uniqueItems: true}}
     ]
