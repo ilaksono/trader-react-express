@@ -9,7 +9,6 @@ const INCOME_STATEMENT = 'INCOME_STATEMENT';
 const BALANCE_SHEET = 'BALANCE_SHEET';
 const CASH_FLOW = 'CASH_FLOW';
 
-
 let i = 0;
 const incrementI = () => {
   i++;

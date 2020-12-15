@@ -14,7 +14,7 @@ const url = 'mongodb://localhost:27017';
 const server = require("http").Server(app);
 const WebSocket = require("ws");
 const wss = new WebSocket.Server({ server });
-
+const helpers = require('./helpers');
 const alpha = process.env.ALPHA_ARR.split(' ');
 const DAILY_ADJ = 'TIME_SERIES_DAILY_ADJUSTED';
 const SYMBOL_SEARCH = 'SYMBOL_SEARCH';
@@ -33,7 +33,7 @@ const apiStatements = require('./routes/apiStatements');
 app.use('/api/statements', apiStatements({i, incrementI}));
 
 const apiUsers = require('./routes/apiUsers');
-app.use('/api/users', apiUsers(MongoClient, url));
+app.use('/api/users', apiUsers(MongoClient, url, helpers));
 
 
 // const primeData = () => {
