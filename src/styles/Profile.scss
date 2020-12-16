@@ -1,0 +1,25 @@
+@import './helpers.scss';
+
+.profile-layout {
+  height: calc(100vh - 100px);
+  width: 100vw;
+  @include flexbox(column, flex-start, center);
+}
+
+.profile-dash-container {
+  width: 100%;
+  border: 2px solid black;
+}
+
+.profile-header-container {
+  height: 40vh;
+  width: 90%;
+  border: 2px solid green;
+  padding-left: 35px;
+  padding-right: 35px;
+  @include flexbox(row, flex-start, center);
+}
+.name-container {
+  @include flexbox(column, flex-start, center);
+  margin-left: 35px;
+}

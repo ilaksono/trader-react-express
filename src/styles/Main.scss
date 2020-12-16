@@ -2,7 +2,8 @@
 
 #root {
   overflow-x: hidden;
-  box-sizing: content-box;
+  box-sizing: border-box;
+  font-family: $font-stack
 }
 
 .main-layout {

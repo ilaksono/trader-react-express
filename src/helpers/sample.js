@@ -1,5 +1,5 @@
 
-const data = [
+export const data = [
   {
     open: 12115,
     high: 12116,
@@ -50,3 +50,15 @@ const data = [
   },
 
 ];
+
+export const favs = [
+  {
+    symbol: 'A',
+    name: 'Agilent Technologies Inc	',
+    close: 117.01,
+    open: 114.34,
+    high: 117.34,
+    low: 114.33,
+    volume: 1338445
+  }
+]

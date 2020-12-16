@@ -16,6 +16,7 @@ import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 import { useHistory } from 'react-router-dom';
 import 'styles/Dashboard.scss';
+import {formatNum} from 'helpers/chartHelpers';
 const useRowStyles = makeStyles({
   root: {
     '& > *': {
@@ -82,10 +83,8 @@ function Row(props) {
                         {spec.high}
                       </TableCell>
                       <TableCell >{spec.low}</TableCell>
-
                       <TableCell align='right'>{spec.open}</TableCell>
-                      <TableCell align='right'>{spec.volume}</TableCell>
-
+                      <TableCell align='right'>{formatNum(spec.volume)}</TableCell>
                     </TableRow>
                   ))}
                 </TableBody>

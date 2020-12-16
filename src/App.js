@@ -5,7 +5,7 @@ import Home from 'components/Home';
 import Background from 'components/Background';
 import 'styles/Background.scss';
 import Candle from 'components/Charts';
-
+import Profile from 'components/Profile';
 function App() {
   return (
     <div className="App">
@@ -23,9 +23,12 @@ function App() {
           <Route path='/charts'>
             <Candle />
           </Route>
+          <Route path='/users'>
+            <Profile />
+          </Route>
         </Switch>
       </Router>
-      <Background/>
+      {/* <Background/> */}
     </div>
   );
 }
