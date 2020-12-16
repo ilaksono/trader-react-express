@@ -35,8 +35,14 @@ module.exports = () => {
     };
   };
 
+  const updateUserStocks = (json, stock) => {
+    json.favs.push({...stock, date: new Date.getTime()});
+    return json;
+  }
+
   return {
     validateUserLog,
-    validateUserReg
+    validateUserReg,
+    updateUserStocks
   };
 };

@@ -52,9 +52,9 @@ module.exports = (MongoClient, url, { validateUserLog, validateUserReg }) => {
 
 
   router.get('/:id', (req, res) => {
-
-
     
+
+
   })
 
   return router;

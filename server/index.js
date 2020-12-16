@@ -34,6 +34,8 @@ app.use('/api/statements', apiStatements({i, incrementI}));
 
 const apiUsers = require('./routes/apiUsers');
 app.use('/api/users', apiUsers(MongoClient, url, helpers));
+const apiStocks = require('./routes/apiStocks');
+app.use('/api/stocks', apiStocks(MongoClient, url, helpers));
 
 
 // const primeData = () => {
