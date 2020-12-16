@@ -77,8 +77,6 @@ const Main = () => {
     // eslint-disable-next-line
   }, [stock, select]);
 
-
-
   return (
     <>
       <div className='main-layout'>

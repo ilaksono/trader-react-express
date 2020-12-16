@@ -7,10 +7,12 @@ module.exports = (MongoClient, url, { updateUserStocks }) => {
       async (err, client) => {
         const db = client.db('trader');
         const coll = db.collection('users');
-        coll.findOneAndUpdate({id: user_id }, {symbol, name})
-        return res.json({});
+        await coll.findOneAndUpdate({ id: user_id }, {
+          $push: { symbol, name }
+        });
+        return res.json({ data: 'ok' });
       });
+  });
 
-
-    return router;
-  };
+  return router;
+};
