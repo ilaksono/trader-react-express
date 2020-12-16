@@ -184,10 +184,6 @@ app.get('/api/autocomplete/:id', async (req, res) => {
   });
 });
 
-
-
-
-
 app.get('/api/global/:id', async (req, res) => {
   try {
     const data = await fetch(
