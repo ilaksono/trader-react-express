@@ -16,7 +16,7 @@ const useCandleData = () => {
       return [];
     let arr = [];
     for (const [key, value] of Object.entries(data)) {
-      arr.unshift({
+      arr.push({
         date: new Date(key),
         open: Number(value['1. open']),
         high: Number(value['2. high']),
@@ -25,6 +25,7 @@ const useCandleData = () => {
         volume: Number(value[type === 'daily' ? '6. volume': '5. volume']),
       });
     }
+    arr.reverse();
     return arr;
   };
   const resetCandleErr = () => {

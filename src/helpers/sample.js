@@ -1,4 +1,3 @@
-
 export const data = [
   {
     open: 12115,

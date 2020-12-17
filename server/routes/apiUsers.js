@@ -1,6 +1,4 @@
 const router = require('express').Router();
-const cors = require('cors');
-router.use(cors());
 
 module.exports = (MongoClient, url, { validateUserLog, validateUserReg }) => {
 
@@ -20,7 +18,6 @@ module.exports = (MongoClient, url, { validateUserLog, validateUserReg }) => {
           });
       });
   });
-
 
   router.post('/register', (req, res) => {
     MongoClient.connect(url, { useUnifiedTopology: true },
@@ -50,12 +47,17 @@ module.exports = (MongoClient, url, { validateUserLog, validateUserReg }) => {
       });
   });
 
-
   router.get('/:id', (req, res) => {
-    
-
-
-  })
+    MongoClient.connect(url, { useUnifiedTopology: true },
+      (err, client) => {
+        const db = client.db('trader');
+        const coll = db.collection('users');
+        coll.findOne({ username: req.params.id })
+          .toArray((err, results) => {
+            res.json({ data: results });
+          });
+      });
+  });
 
   return router;
 };
