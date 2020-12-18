@@ -53,7 +53,7 @@ export const data = [
 export const favs = [
   {
     symbol: 'A',
-    name: 'Agilent Technologies Inc	',
+    name: 'Agilent Technologies Inc',
     close: 117.01,
     open: 114.34,
     high: 117.34,

@@ -23,7 +23,7 @@ function App() {
           <Route path='/charts'>
             <Candle />
           </Route>
-          <Route path='/users'>
+          <Route path='/users/:id'>
             <Profile />
           </Route>
         </Switch>
