@@ -58,15 +58,20 @@ const Dashboard = () => {
     <div className='dashboard-layout'>
       <div className='dash-container'>
         {
-          !index.length ?
-            <CircularProgress size='100' color='primary' />
-            :
-            <DashTable
-              index={parsedList}
-              getDailyAdjusted={getDailyAdjusted}
-              sortStockData={sortStockData}
-            />
+          // !index.length ?
+          //   <CircularProgress size='100' color='primary' />
+          //   :
+          //   <DashTable
+          //     index={parsedList}
+          //     getDailyAdjusted={getDailyAdjusted}
+          //     sortStockData={sortStockData}
+          //   />
         }
+        <DashTable
+          index={parsedList}
+          getDailyAdjusted={getDailyAdjusted}
+          sortStockData={sortStockData}
+        />
 
 
       </div>
