@@ -19,18 +19,8 @@ const Candle = (props) => {
   const [ticker, setTicker] = useState('');
   const [blank, setBlank] = useState('');
   const {
-
     primeChartData
   } = useChartData();
-  const {
-    candleData,
-    getCandleData,
-    candleHeader,
-    toggleAdjusted,
-    adjust,
-    candleErr,
-    resetCandleErr
-  } = useCandleData();
 
   const [showStates, setShowStates]
     = useState(false);
@@ -46,7 +36,14 @@ const Candle = (props) => {
     setStatementMode,
     changeStatePage,
     resetStatePage,
-    primeData
+    primeData,
+    candleData,
+    getCandleData,
+    candleHeader,
+    toggleAdjusted,
+    adjust,
+    candleErr,
+    resetCandleErr
 
   } = useContext(AppContext);
 

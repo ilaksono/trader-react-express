@@ -2,6 +2,8 @@ import React from 'react';
 import useStockData from 'hooks/useStockData';
 import useStatementData from 'hooks/useStatementData';
 import useStatementChart from 'hooks/useStatementChart';
+import useCandleData from 'hooks/useCandleData';
+
 const AppContext = React.createContext();
 
 export const AppProvider = ({ children }) => {
@@ -33,6 +35,17 @@ export const AppProvider = ({ children }) => {
     resetStatePage
 
   } = useStatementData();
+
+  const {
+    candleData,
+    getCandleData,
+    candleHeader,
+    toggleAdjusted,
+    adjust,
+    candleErr,
+    resetCandleErr
+  } = useCandleData();
+
   return (
     <AppContext.Provider value={{
       stock,
@@ -55,7 +68,14 @@ export const AppProvider = ({ children }) => {
       changeStatePage,
       resetStatePage,
       stateData,
-      primeData
+      primeData,
+      candleData,
+      getCandleData,
+      candleHeader,
+      toggleAdjusted,
+      adjust,
+      candleErr,
+      resetCandleErr
 
     }}>
       {children}

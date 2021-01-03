@@ -4,7 +4,7 @@ import NavBar from 'components/NavBar';
 import Home from 'components/Home';
 import Background from 'components/Background';
 import 'styles/Background.scss';
-
+import Company from 'views/Company';
 import Candle from 'components/Charts';
 import Profile from 'components/Profile';
 function App() {
@@ -26,6 +26,9 @@ function App() {
           </Route>
           <Route path='/users/:id'>
             <Profile />
+          </Route>
+          <Route path='/companies/:id'>
+            <Company />
           </Route>
         </Switch>
       </Router>

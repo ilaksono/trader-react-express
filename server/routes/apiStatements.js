@@ -8,6 +8,8 @@ router.use(cors());
 const INCOME_STATEMENT = 'INCOME_STATEMENT';
 const BALANCE_SHEET = 'BALANCE_SHEET';
 const CASH_FLOW = 'CASH_FLOW';
+const EARNINGS = 'EARNINGS';
+const OVERVIEW = 'OVERVIEW';
 
 let i = 0;
 const incrementI = () => {
@@ -29,7 +31,6 @@ module.exports = () => {
   router.get('/income/:id', async (req, res) => {
     try {
       const data = await fetch(getURL(INCOME_STATEMENT, req.params.id));
-      console.log(i)
       incrementI();
       const data2 = await data.json();
       res.json({ data: data2 });
@@ -42,7 +43,6 @@ module.exports = () => {
   router.get('/balance/:id', async (req, res) => {
     try {
       const data = await fetch(getURL(BALANCE_SHEET, req.params.id));
-      console.log(i)
 
       incrementI();
       const data2 = await data.json();
@@ -56,7 +56,6 @@ module.exports = () => {
   router.get('/cash/:id', async (req, res) => {
     try {
       const data = await fetch(getURL(CASH_FLOW, req.params.id));
-      console.log(i)
 
       incrementI();
       const data2 = await data.json();
@@ -66,5 +65,26 @@ module.exports = () => {
     }
 
   });
+
+  router.get('/earnings/:id', async (req, res) => {
+    try {
+      const data = await fetch(getURL(EARNINGS, req.params.id));
+      const data2 = await data.json();
+      res.send(data2);
+    } catch (er) {
+      console.log(er);
+    }
+
+  });
+  router.get('overview/:id', async (req, res) => {
+    try {
+      const data = await (fetch(getURL(OVERVIEW, req.params.id)));
+      const data2 = await data.json();
+      res.send(data2);
+    } catch (er) {
+      console.log(er);
+    }
+  });
+
   return router;
 };
