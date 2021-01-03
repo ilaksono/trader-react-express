@@ -1,0 +1,7 @@
+@import './helpers.scss';
+
+.company-page-layout {
+  width: 100vw;
+  height: calc(100vh - 85px);
+  @include flexbox(column, flex-start, flex-start);
+}
