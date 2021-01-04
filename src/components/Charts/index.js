@@ -110,7 +110,7 @@ const Candle = (props) => {
             (candleData.length > 0 && !candleErr.type) &&
             <TypeChooser>
               {/* {type => <Chart type={type} data={data} />} */}
-              {type => <CandleStickChartWithMA type={type} data={candleData} />}
+              {type => <CandleStickChartWithMA height={400} type={type} data={candleData} />}
             </TypeChooser>
           }
           {candleErr.type &&

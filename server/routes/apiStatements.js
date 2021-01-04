@@ -76,9 +76,9 @@ module.exports = () => {
     }
 
   });
-  router.get('overview/:id', async (req, res) => {
+  router.get('/overview/:id', async (req, res) => {
     try {
-      const data = await (fetch(getURL(OVERVIEW, req.params.id)));
+      const data = await fetch(getURL(OVERVIEW, req.params.id));
       const data2 = await data.json();
       res.send(data2);
     } catch (er) {

@@ -13,7 +13,7 @@ const CompanyChart = () => {
     <div className='company-chart-container'>
       <TypeChooser>
         {/* {type => <Chart type={type} data={data} />} */}
-        {type => <CandleStickChartWithMA type={type} data={candleData} />}
+        {type => <CandleStickChartWithMA height={140} type={type} data={candleData} />}
       </TypeChooser>
     </div>
   );

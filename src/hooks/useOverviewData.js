@@ -4,9 +4,10 @@ import axios from 'axios';
 const useOverviewData = () => {
   const [overview, setOverview] = useState({});
   const [desc, setDesc] = useState({});
-  
+
   const primeOverview = async (tick) => {
     const data = await axios.get(`/api/statements/overview/${tick}`);
+    console.log(data);
     const json = data.data;
     primeDesc(json);
     delete json.Symbol;

@@ -1,14 +1,13 @@
 import Table from 'react-bootstrap/Table';
-import { useState, useContext } from 'react';
-import AppContext from 'AppContext';
+import { useState } from 'react';
 const Description = ({ desc }) => {
   const [readMore, setReadMore] = useState(false);
 
   let parsedRows = [];
-  if (desc.length) {
+  if (desc.Symbol) {
     parsedRows = Object.entries(desc).map(({ val, key }, index) => {
       return (
-        <tr>
+        <tr key={index}>
           <td>
             {key}
           </td>
@@ -39,9 +38,9 @@ const Description = ({ desc }) => {
                         }}
                         onClick={() => setReadMore(true)}>...more</span>
                     </>
-
                 )
-                : val
+                : 
+                val
             }
           </td>
         </tr>
@@ -50,19 +49,19 @@ const Description = ({ desc }) => {
   }
   return (
     <>
-      <Table striped bordered hover>
-        <div className='description-container'>
-        </div>
-        <thead>
-          <tr>
-            <th>Key</th>
-            <th>Value</th>
-          </tr>
-        </thead>
-        <tbody>
-          {parsedRows.length > 0 && parsedRows}
-        </tbody>
-      </Table>
+      <div className='description-container'>
+        <Table striped bordered hover>
+          <thead>
+            <tr>
+              <th>Key</th>
+              <th>Value</th>
+            </tr>
+          </thead>
+          <tbody>
+            {parsedRows.length > 0 && parsedRows}
+          </tbody>
+        </Table>
+      </div>
     </>
   );
 

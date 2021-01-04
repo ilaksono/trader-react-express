@@ -68,7 +68,10 @@ class CandleStickChartWithMA extends React.Component {
       .stroke("#4682B4")
       .fill("#4682B4");
 
-    const { type, data: initialData, width, ratio } = this.props;
+    const { type, data: initialData, width, ratio, height 
+    
+    } 
+    = this.props;
 
     const calculatedData = ema20(sma20(wma20(tma20(ema50(smaVolume50(initialData))))));
     const xScaleProvider = discontinuousTimeScaleProvider
@@ -85,7 +88,7 @@ class CandleStickChartWithMA extends React.Component {
     const xExtents = [start, end];
 
     return (
-      <ChartCanvas height={400}
+      <ChartCanvas height={height}
         width={width}
         ratio={ratio}
         margin={{ left: 70, right: 70, top: 10, bottom: 30 }}
