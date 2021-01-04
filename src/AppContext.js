@@ -3,7 +3,7 @@ import useStockData from 'hooks/useStockData';
 import useStatementData from 'hooks/useStatementData';
 import useStatementChart from 'hooks/useStatementChart';
 import useCandleData from 'hooks/useCandleData';
-
+import useOverviewData from 'hooks/useOverviewData';
 const AppContext = React.createContext();
 
 export const AppProvider = ({ children }) => {
@@ -35,7 +35,12 @@ export const AppProvider = ({ children }) => {
     resetStatePage
 
   } = useStatementData();
-
+  const {
+    overview,
+    setOverview,
+    primeOverview,
+    desc
+  } = useOverviewData();
   const {
     candleData,
     getCandleData,
@@ -75,7 +80,11 @@ export const AppProvider = ({ children }) => {
       toggleAdjusted,
       adjust,
       candleErr,
-      resetCandleErr
+      resetCandleErr,
+      overview,
+      setOverview,
+      primeOverview,
+      desc,
 
     }}>
       {children}

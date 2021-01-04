@@ -13,9 +13,11 @@ import useCandleData from 'hooks/useCandleData';
 import { Switch } from '@material-ui/core';
 import StatementsDate from 'components/Main/StatementsDate';
 import Side from 'components/Side';
+import {useHistory} from 'react-router-dom';
+
 const Candle = (props) => {
 
-
+  const history = useHistory();
   const [ticker, setTicker] = useState('');
   const [blank, setBlank] = useState('');
   const {
@@ -102,9 +104,10 @@ const Candle = (props) => {
 
           <div>
             {candleHeader.symbol} - {candleHeader.date} - {candleHeader.type}
+            <Button onClick={() => history.push(`/companies/${ticker}`)}>Details</Button>
           </div>
           {
-            (candleData.length && !candleErr.type) &&
+            (candleData.length > 0 && !candleErr.type) &&
             <TypeChooser>
               {/* {type => <Chart type={type} data={data} />} */}
               {type => <CandleStickChartWithMA type={type} data={candleData} />}
